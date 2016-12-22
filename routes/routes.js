@@ -18,8 +18,11 @@ var appRouter = function(app) {
   });
 
 app.post("/branchalexa", function(req, res) {
+      
+      console.log(req.body);
       var branchResponseAlexa =
         {
+        
        "version": "1.0",
         "response": {
             "outputSpeech": {
