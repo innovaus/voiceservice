@@ -20,6 +20,7 @@ var appRouter = function(app) {
   app.post("/branchlocator", function(req, res) {
 
       var zip = "94587";
+      console.log(req);
       getJsonFromBranchLocator(zip, function(data){
         if(data.GetListATMorBranchReply.BranchList.length == 0)
           {
