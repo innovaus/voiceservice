@@ -18,7 +18,7 @@ var appRouter = function(app) {
   });
 
   app.post("/branchlocator", function(req, res) {
-      var zip = req.body.result.parameters.number;
+      var zip = req.body.result.parameters.zipcode;
       if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
         var branchResponse =
                   {
