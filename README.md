@@ -1,2 +1,2 @@
-# voiceservice
-for api.ai integration with heroku
+# samplenodejs
+trying a sample rest service
