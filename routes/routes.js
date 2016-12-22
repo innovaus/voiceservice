@@ -18,9 +18,20 @@ var appRouter = function(app) {
   });
 
   app.post("/branchlocator", function(req, res) {
+      var zip = req.body.result.parameters.number;
+      if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
+        var branchResponse =
+                  {
+                  "speech": "Please provide a Zipcode",
+                  "displayText": "",
+                  "data": {},
+                  "contextOut": [],
+                  "source": "U.S Bank"
+                  }
 
-      var zip = "94587";
-      console.log(req);
+        res.send(branchResponse);
+        return;
+      }
       getJsonFromBranchLocator(zip, function(data){
         if(data.GetListATMorBranchReply.BranchList.length == 0)
           {
