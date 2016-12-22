@@ -17,6 +17,26 @@ var appRouter = function(app) {
       res.send(branchResponse);
   });
 
+app.post("/branchalexa", function(req, res) {
+      var branchResponseAlexa =
+        {
+       "version": "1.0",
+        "response": {
+            "outputSpeech": {
+            "type": "PlainText",
+            "text": "Barack Hussein Obama II is the 44th and current President of the United States."
+            },
+            "card": {
+                 "content": "Barack Hussein Obama II is the 44th and current President of the United States.",
+                "title": "Barack Hussein Obama II is the 44th and current President of the United States.",
+             "type": "Simple"
+            },
+    "shouldEndSession": true
+  },
+  "sessionAttributes": {}
+        }
+      res.send(branchResponseAlexa);
+  });
   app.post("/branchlocator", function(req, res) {
       var zip = req.body.result.parameters.zipcode;
       if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
