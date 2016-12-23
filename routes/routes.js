@@ -19,7 +19,7 @@ var appRouter = function(app) {
 
 app.post("/branchalexa", function(req, res) {
       
-      console.log(req.body);
+     // console.log(req.body.result.parameters.zip);
       var branchResponseAlexa =
         {
         
@@ -27,11 +27,11 @@ app.post("/branchalexa", function(req, res) {
         "response": {
             "outputSpeech": {
             "type": "PlainText",
-            "text": "Barack Hussein Obama II is the 44th and current President of the United States."
+            "text": "I am text."
             },
             "card": {
-                 "content": "Barack Hussein Obama II is the 44th and current President of the United States.",
-                "title": "Barack Hussein Obama II is the 44th and current President of the United States.",
+                 "content": "I am card content.",
+                "title": "I am card title.",
              "type": "Simple"
             },
     "shouldEndSession": true
