@@ -18,28 +18,80 @@ var appRouter = function(app) {
   });
 
 app.post("/branchalexa", function(req, res) {
-      
-     // console.log(req.body.result.parameters.zip);
-      var branchResponseAlexa =
-        {
-        
-       "version": "1.0",
+      var zip = 55124;
+      if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
+        var branchResponse =
+                  {
+                 "version": "1.0",
         "response": {
             "outputSpeech": {
             "type": "PlainText",
-            "text": "I am text."
+            "text": "Please provide zipcode."
             },
             "card": {
-                 "content": "I am card content.",
-                "title": "I am card title.",
+                 "content": "",
+                "title": "",
              "type": "Simple"
             },
     "shouldEndSession": true
   },
   "sessionAttributes": {}
-        }
-      res.send(branchResponseAlexa);
+                  }
+
+        res.send(branchResponse);
+        return;
+      }
+      getJsonFromBranchLocator(zip, function(data){
+        if(data.GetListATMorBranchReply.BranchList.length == 0)
+          {
+              spokenMsg = "<speak>The zip code <say-as interpret-as=\"digits\">" + zip +
+                  "</say-as> does not have any nearby branches.</speak>";
+              cardMsg = "The zip code " + zip + " does not have any nearby branches.";
+
+              response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
+              return;
+          }
+
+          var branchName = data.GetListATMorBranchReply.BranchList[0].Name.replace("&", "and");
+          var distance = data.GetListATMorBranchReply.BranchList[0].Distance + " miles";
+          var streetAddress = data.GetListATMorBranchReply.BranchList[0].LocationIdentifier.Address.AddressLine1.replace("&", "and");
+          var closingTime = getBranchClosingTimeForToday(data.GetListATMorBranchReply.BranchList[0]);
+
+          spokenMsg = "<speak>The closest Branch to the <say-as interpret-as=\"digits\">" + zip +
+                  "</say-as> zip code is the " + branchName + " location. It's located " + distance +
+                  " away at " + streetAddress + ". " +
+                  "The branch closes this evening at " + closingTime + ".</speak>";
+
+          cardMsg = "The closest Branch to the " + zip + " zip code is the "
+                  + branchName + " location. It's located " + distance + " away at " + streetAddress + ". " +
+                  "The branch closes this evening at " + closingTime + ".";
+
+          var branchResponse =
+                    {
+                   "version": "1.0",
+        "response": {
+            "outputSpeech": {
+            "type": "PlainText",
+            "text": spokenMsg
+            },
+            "card": {
+                 "content": "",
+                "title": "",
+             "type": "Simple"
+            },
+    "shouldEndSession": true
+  },
+  "sessionAttributes": {}
+                    }
+
+          //response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
+          res.send(branchResponse);
+          return;
+       });
   });
+
+
+
   app.post("/branchlocator", function(req, res) {
       var zip = req.body.result.parameters.zipcode;
       if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
