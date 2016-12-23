@@ -134,7 +134,7 @@ app.post("/branchalexa", function(req, res) {
 
           var branchResponse =
                     {
-                    "speech": cardMsg,
+                    "speech": spokenMsg,
                     "displayText": "",
                     "data": {},
                     "contextOut": [],
