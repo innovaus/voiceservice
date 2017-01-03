@@ -93,7 +93,8 @@ app.post("/branchalexa", function(req, res) {
 
 
   app.post("/branchlocator", function(req, res) {
-    console.log(req.body);
+    //console.log(req.body);
+    console.log(req.body.originalRequest.source);
       var zip = req.body.result.parameters.zipcode;
       if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
         var branchResponse =
@@ -133,17 +134,29 @@ app.post("/branchalexa", function(req, res) {
                   + branchName + " location. It's located " + distance + " away at " + streetAddress + ". " +
                   "The branch closes this evening at " + closingTime + ".";
 
-          var branchResponse =
-                    {
-                    "speech": spokenMsg,
-                    "displayText": cardMsg,
-                    "data": {},
-                    "contextOut": [],
-                    "source": "U.S Bank"
-                    }
 
-          //response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
-          res.send(branchResponse);
+          if(req.body.originalRequest.source == 'facebook'){
+            var branchResponse =
+                      {
+                      "speech": cardMsg,
+                      "displayText": cardMsg,
+                      "data": {},
+                      "contextOut": [],
+                      "source": "U.S Bank"
+                    };
+            res.send(branchResponse);
+          } else {
+            var branchResponse =
+                      {
+                      "speech": spokenMsg,
+                      "displayText": cardMsg,
+                      "data": {},
+                      "contextOut": [],
+                      "source": "U.S Bank"
+                    };
+            res.send(branchResponse);
+          }
+
           return;
        });
   });
