@@ -93,6 +93,7 @@ app.post("/branchalexa", function(req, res) {
 
 
   app.post("/branchlocator", function(req, res) {
+    console.log("Request=" + req);
       var zip = req.body.result.parameters.zipcode;
       if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
         var branchResponse =
