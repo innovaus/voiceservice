@@ -13,47 +13,27 @@ var appRouter = function(app) {
       "messages": [
 
 
-                      {
+        {
+          "type": 0,
+          "speech": "welcome to text response"
+        },
+        {
+          "title": "welcome to usb service",
+          "subtitle": "select the options below",
+          "buttons": [
+            {
+              "text": "balance",
+              "postback": "balance"
+            },
+            {
+              "text": "branch locator",
+              "postback": "branch"
+            }
+          ],
+          "type": 1
+        }
 
-                          "title":"How may I help you?",
 
-                          "subtitle":"Please type your question or choose from the below option or slide right for more options.",
-
-                          "buttons":[
-
-                            {
-
-                              "type":"postback",
-
-                              "title":"Balance Check",
-
-                              "payload":"balance_check"
-
-                            },
-
-                            {
-
-                              "type":"postback",
-
-                              "title":"Transaction History",
-
-                              "payload":"transaction_history"
-
-                            },
-
-                            {
-
-                              "type":"postback",
-
-                              "title":"Card Operations",
-
-                              "payload":"card_operations"
-
-                            }
-
-                          ]
-
-                      }
                     ],
       "contextOut": [],
       "source": "US Bank"
