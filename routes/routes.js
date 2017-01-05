@@ -15,22 +15,19 @@ var appRouter = function(app) {
                       {
                         "type": 1,
                           "title":"How may I help you?",
-                          "subtitle":"Please type your question or choose from the below option or slide right for more options.",
+                          "subtitle":"Please type your question or choose from the below option",
                           "buttons":[
                             {
-                              "type":"postback",
                               "title":"Balance Check",
-                              "payload":"balance_check"
+                              "postback":"balance_check"
                             },
                             {
-                              "type":"postback",
                               "title":"Transaction History",
-                              "payload":"transaction_history"
+                              "postback":"transaction_history"
                             },
                             {
-                              "type":"postback",
                               "title":"Card Operations",
-                              "payload":"card_operations"
+                              "postback":"card_operations"
                             }
                           ]
                       }
