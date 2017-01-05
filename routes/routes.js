@@ -6,42 +6,50 @@ var appRouter = function(app) {
   });
 
   app.post("/usbservice", function(req, res) {
+    if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
       var response =
       {
       "speech": "",
       "displayText": "",
       "messages": [
-
-
-        {
-          "type": 0,
-          "speech": "welcome to text response"
-        },
-        {
-          "title": "welcome to usb service",
-          "subtitle": "select the options below",
-          "buttons": [
-            {
-              "text": "balance",
-              "postback": "balance"
-            },
-            {
-              "text": "branch locator",
-              "postback": "branch"
-            }
-          ],
-          "type": 1
-        }
-
-
+                      {
+                        "type": 1,
+                          "title":"How may I help you?",
+                          "subtitle":"Please type your question or choose from the below option or slide right for more options.",
+                          "buttons":[
+                            {
+                              "type":"postback",
+                              "title":"Balance Check",
+                              "payload":"balance_check"
+                            },
+                            {
+                              "type":"postback",
+                              "title":"Transaction History",
+                              "payload":"transaction_history"
+                            },
+                            {
+                              "type":"postback",
+                              "title":"Card Operations",
+                              "payload":"card_operations"
+                            }
+                          ]
+                      }
                     ],
       "contextOut": [],
       "source": "US Bank"
       }
-
-
-
       res.send(response);
+    } else {
+      var response =
+        {
+        "speech": "How may I help you? Specify balance check, transaction history, card operations",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }
   });
 
   app.post("/branch", function(req, res) {
