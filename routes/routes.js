@@ -9,12 +9,12 @@ var appRouter = function(app) {
     if(req.body.originalRequest.source == 'facebook'){
       var response =
         {
-          "facebook": 
+          "facebook":
             {
 
           "recipient": {
 
-              "id": recipient_id
+              "id": "recipient_id"
 
           },            "message": {
 
