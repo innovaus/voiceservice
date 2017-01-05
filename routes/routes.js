@@ -8,112 +8,118 @@ var appRouter = function(app) {
   app.post("/usbservice", function(req, res) {
     if(req.body.originalRequest.source == 'facebook'){
       var response =
-        {
+      {
+      "speech": {
 
-          "recipient": {
+        "recipient": {
 
-              "id": "recipient_id"
+            "id": "recipient_id"
 
-          },            "message": {
+        },            "message": {
 
-              "attachment":{
+            "attachment":{
 
-                "type":"template",
+              "type":"template",
 
-                "payload":{
+              "payload":{
 
-                  "template_type":"generic",
+                "template_type":"generic",
 
-                  "elements":[
+                "elements":[
 
-                      {
+                    {
 
-                          "title":"How may I help you?",
+                        "title":"How may I help you?",
 
-                          "subtitle":"Please type your question or choose from the below option or slide right for more options.",
+                        "subtitle":"Please type your question or choose from the below option or slide right for more options.",
 
-                          "buttons":[
+                        "buttons":[
 
-                            {
+                          {
 
-                              "type":"postback",
+                            "type":"postback",
 
-                              "title":"Balance Check",
+                            "title":"Balance Check",
 
-                              "payload":"balance_check"
+                            "payload":"balance_check"
 
-                            },
+                          },
 
-                            {
+                          {
 
-                              "type":"postback",
+                            "type":"postback",
 
-                              "title":"Transaction History",
+                            "title":"Transaction History",
 
-                              "payload":"transaction_history"
+                            "payload":"transaction_history"
 
-                            },
+                          },
 
-                            {
+                          {
 
-                              "type":"postback",
+                            "type":"postback",
 
-                              "title":"Card Operations",
+                            "title":"Card Operations",
 
-                              "payload":"card_operations"
+                            "payload":"card_operations"
 
-                            }
+                          }
 
-                          ]
+                        ]
 
-                      },
+                    },
 
-                      {
+                    {
 
-                          "title":"Other Queries",
+                        "title":"Other Queries",
 
-                          "buttons":[
+                        "buttons":[
 
-                            {
+                          {
 
-                              "type":"postback",
+                            "type":"postback",
 
-                              "title":"Let me Type",
+                            "title":"Let me Type",
 
-                              "payload":"other_queries"
+                            "payload":"other_queries"
 
-                            }]
+                          }]
 
-                      },
+                    },
 
-                      {
+                    {
 
-                          "title":"Connect with Live Agent",
+                        "title":"Connect with Live Agent",
 
-                          "subtitle":"A live agent will assist you for your queries",
+                        "subtitle":"A live agent will assist you for your queries",
 
-                          "buttons":[
+                        "buttons":[
 
-                            {
+                          {
 
-                              "type":"postback",
+                            "type":"postback",
 
-                              "title":"Connect Me",
+                            "title":"Connect Me",
 
-                              "payload":"live_agent_connect"
+                            "payload":"live_agent_connect"
 
-                            }]
+                          }]
 
-                      }
+                    }
 
-                  ]
-
-                }
+                ]
 
               }
 
-          }
+            }
+
         }
+      },
+      "displayText": "",
+      "data": {},
+      "contextOut": [],
+      "source": "US Bank"
+      }
       res.send(response);
     } else {
       var response =
