@@ -6,7 +6,6 @@ var appRouter = function(app) {
   });
 
   app.post("/usbservice", function(req, res) {
-    if(req.body.originalRequest.source == 'facebook'){
       var response =
       {
       "speech": "",
@@ -63,17 +62,6 @@ var appRouter = function(app) {
 
 
       res.send(response);
-    } else {
-      var response =
-        {
-        "speech": "How may I help you? Specify balance check, transaction history, card operations",
-        "displayText": "",
-        "data": {},
-        "contextOut": [],
-        "source": "US Bank"
-        }
-      res.send(response);
-    }
   });
 
   app.post("/branch", function(req, res) {
