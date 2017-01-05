@@ -6,6 +6,7 @@ var appRouter = function(app) {
   });
 
   app.post("/usbservice", function(req, res) {
+    console.log(req.body);
     if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
       var response =
       {
