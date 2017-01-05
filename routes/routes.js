@@ -13,15 +13,19 @@ var appRouter = function(app) {
       "displayText": "",
       "messages": [
                       {
-                        "title": "welcome to usb service",
-                        "subtitle": "select the options below",
+                        "title": "How may I help you?",
+                        "subtitle": "Please type your question or choose from the below option",
                         "buttons": [
                           {
-                            "text": "balance",
-                            "postback": "balance"
+                            "text": "Balance Check",
+                            "postback": "Balance Check"
                           },
                           {
-                            "text": "branch locator",
+                            "text": "Transaction History",
+                            "postback": "Transaction History"
+                          },
+                          {
+                            "text": "Branch Locator",
                             "postback": "branch"
                           }
                         ],
