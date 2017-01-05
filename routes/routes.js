@@ -11,24 +11,8 @@ var appRouter = function(app) {
       {
       "speech": "",
       "displayText": "",
-      "data": {
-        "facebook" : {
+      "messages": [
 
-          "recipient": {
-
-              "id": "recipient_id"
-
-          },            "message": {
-
-              "attachment":{
-
-                "type":"template",
-
-                "payload":{
-
-                  "template_type":"generic",
-
-                  "elements":[
 
                       {
 
@@ -70,57 +54,8 @@ var appRouter = function(app) {
 
                           ]
 
-                      },
-
-                      {
-
-                          "title":"Other Queries",
-
-                          "buttons":[
-
-                            {
-
-                              "type":"postback",
-
-                              "title":"Let me Type",
-
-                              "payload":"other_queries"
-
-                            }]
-
-                      },
-
-                      {
-
-                          "title":"Connect with Live Agent",
-
-                          "subtitle":"A live agent will assist you for your queries",
-
-                          "buttons":[
-
-                            {
-
-                              "type":"postback",
-
-                              "title":"Connect Me",
-
-                              "payload":"live_agent_connect"
-
-                            }]
-
                       }
-
-                  ]
-
-                }
-
-              }
-
-          }
-        }
-
-
-      },
+                    ],
       "contextOut": [],
       "source": "US Bank"
       }
