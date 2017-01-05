@@ -9,11 +9,115 @@ var appRouter = function(app) {
     if(req.body.originalRequest.source == 'facebook'){
       var response =
         {
-        "speech": "How may I help you? Specify balance check, transaction history, card operations",
-        "displayText": "",
-        "data": {},
-        "contextOut": [],
-        "source": "US Bank"
+          "facebook": {
+            {
+
+          "recipient": {
+
+              "id": recipient_id
+
+          },            "message": {
+
+              "attachment":{
+
+                "type":"template",
+
+                "payload":{
+
+                  "template_type":"generic",
+
+                  "elements":[
+
+                      {
+
+                          "title":"How may I help you?",
+
+                          "subtitle":"Please type your question or choose from the below option or slide right for more options.",
+
+                          "buttons":[
+
+                            {
+
+                              "type":"postback",
+
+                              "title":"Balance Check",
+
+                              "payload":"balance_check"
+
+                            },
+
+                            {
+
+                              "type":"postback",
+
+                              "title":"Transaction History",
+
+                              "payload":"transaction_history"
+
+                            },
+
+                            {
+
+                              "type":"postback",
+
+                              "title":"Card Operations",
+
+                              "payload":"card_operations"
+
+                            }
+
+                          ]
+
+                      },
+
+                      {
+
+                          "title":"Other Queries",
+
+                          "buttons":[
+
+                            {
+
+                              "type":"postback",
+
+                              "title":"Let me Type",
+
+                              "payload":"other_queries"
+
+                            }]
+
+                      },
+
+                      {
+
+                          "title":"Connect with Live Agent",
+
+                          "subtitle":"A live agent will assist you for your queries",
+
+                          "buttons":[
+
+                            {
+
+                              "type":"postback",
+
+                              "title":"Connect Me",
+
+                              "payload":"live_agent_connect"
+
+                            }]
+
+                      }
+
+                  ]
+
+                }
+
+              }
+
+          }
+
+      }
+            }
         }
       res.send(response);
     } else {
