@@ -9,8 +9,6 @@ var appRouter = function(app) {
     if(req.body.originalRequest.source == 'facebook'){
       var response =
         {
-          "facebook":
-            {
 
           "recipient": {
 
@@ -115,8 +113,6 @@ var appRouter = function(app) {
               }
 
           }
-
-      }
         }
       res.send(response);
     } else {
