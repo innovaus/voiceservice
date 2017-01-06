@@ -118,6 +118,18 @@ var handleAccountBalance = function(req, res) {
       res.send(branchResponse);
       return;
     }
+
+    var subtitle;
+if (accountType == 'checkings'){
+ subtitle = "Checking xxx356: $15,382.57";
+  
+}else if(accountType == 'savings'){
+subtitle = "Saving  xxx432: $4,655.00";
+}else if(accountType == 'CD') {
+subtitle = "CD xxx478: $400,655.00";
+
+}
+   
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
     {
@@ -126,7 +138,7 @@ var handleAccountBalance = function(req, res) {
     "messages": [
                     {
                       "title": "Your Balance as of " + getDateTime(),
-                      "subtitle": "Checking xxx356: $15,382.57",
+                      "subtitle": subtitle,
                       "buttons": [
                         {
                           "text": "Transactions",
@@ -143,7 +155,7 @@ var handleAccountBalance = function(req, res) {
   } else {
     var response =
       {
-      "speech": "Your Balance as of " + getDateTime() + "in Checking xxx356: $15,382.57",
+      "speech": "Your Balance as of " + getDateTime() + "in " + subtitle ,
       "displayText": "",
       "data": {},
       "contextOut": [],
