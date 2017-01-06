@@ -85,38 +85,50 @@ var handleAccountBalance = function(req, res) {
   console.log(req.body.originalRequest.source);
     var accountType = req.body.result.parameters.accountType;
     if(accountType == null || accountType == "" ){
-      var branchResponse =
-                {
-                "speech": "",
-                "displayText": "",
-                "messages": [
+      if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+          var branchResponse =
                     {
-                      "title": "Choose Account Type: ",
-                      "subtitle": "",
-                      "buttons": [
+                    "speech": "",
+                    "displayText": "",
+                    "messages": [
                         {
-                          "text": "Checking xx356",
-                          "postback": "Checking"
-                        },
-                        {
-                          "text": "Saving xxx432",
-                          "postback": "Saving"
-                        },
-                        {
-                          "text": "CD xxx478",
-                          "postback": "CD"
+                          "title": "Choose Account Type: ",
+                          "subtitle": "",
+                          "buttons": [
+                            {
+                              "text": "Checking xx356",
+                              "postback": "Checking"
+                            },
+                            {
+                              "text": "Saving xxx432",
+                              "postback": "Saving"
+                            },
+                            {
+                              "text": "CD xxx478",
+                              "postback": "CD"
+                            }
+                          ],
+                          "type": 1
                         }
                       ],
-                      "type": 1
+
+                    "contextOut": [],
+                    "source": "U.S Bank"
                     }
-                  ],
 
-                "contextOut": [],
-                "source": "U.S Bank"
-                }
-
-      res.send(branchResponse);
-      return;
+          res.send(branchResponse);
+          return;
+        } else {
+          var response =
+            {
+            "speech": "Choose Account Type, Say Checkings, Savings, CD",
+            "displayText": "",
+            "data": {},
+            "contextOut": [],
+            "source": "US Bank"
+            }
+          res.send(response);
+        }
     }
 
     var subtitle;
