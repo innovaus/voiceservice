@@ -140,7 +140,7 @@ var handleAccountBalance = function(req, res) {
                       "buttons": [
                         {
                           "text": "Transactions",
-                          "postback": "Transactions of Checkings"
+                          "postback": "Transactions of "+ accountType
                         }
                       ],
                       "type": 1
@@ -240,62 +240,57 @@ var handleTransactionHistory = function(req, res) {
     res.send(response);
 
 }else if(accountType == 'savings'){
-var response =
-    {
-    "speech": "",
-    "displayText": "",
-    "messages": [
-                    {
-                      "title": "Your Transaction History as of" + getDateTime(),
-                      "subtitle": "Account No:...xxx356:",
-                      "buttons": [
+    var response =
+        {
+        "speech": "",
+        "displayText": "",
+        "messages": [
                         {
-                          "text": "-$3459.90 on 12/03 Macys",
-                          "postback": "-$3459.90 on 12/03 Macys"
-                        },
-                        {
-                          "text": "-$239.98 on 12/05 Sears",
-                          "postback": "-$239.98 on 12/05 Sears"
-                        },
-                        {
-                          "text": "-$2000.45 on 12/08 Transfer",
-                          "postback": "-$2000.45 on 12/08 Transfer"
+                          "title": "Your Transaction History as of" + getDateTime(),
+                          "subtitle": "Account No:...xxx432:",
+                          "buttons": [
+                            {
+                              "text": "-$3459.90 on 12/03 Macys",
+                              "postback": "-$3459.90 on 12/03 Macys"
+                            },
+                            {
+                              "text": "-$239.98 on 12/05 Sears",
+                              "postback": "-$239.98 on 12/05 Sears"
+                            },
+                            {
+                              "text": "-$2000.45 on 12/08 Transfer",
+                              "postback": "-$2000.45 on 12/08 Transfer"
+                            }
+                          ],
+                          "type": 1
                         }
                       ],
-                      "type": 1
-                    }
-                  ],
-    "contextOut": [],
-    "source": "US Bank"
+        "contextOut": [],
+        "source": "US Bank"
+        }
+        res.send(response);
+    }else if(accountType == 'CD') {
+        var response =
+            {
+            "speech": "",
+            "displayText": "",
+            "messages": [
+                            {
+                              "title": "Your Transaction History as of" + getDateTime(),
+                              "subtitle": "Account No:...xxx478:",
+                              "buttons": [
+                                {
+                                  "text": "+$1,450.000.00 on 12/09  Deposit"
+                                }
+                              ],
+                              "type": 1
+                            }
+                          ],
+            "contextOut": [],
+            "source": "US Bank"
+            }
+            res.send(response);
     }
-    res.send(response);
-}else if(accountType == 'CD') {
-var response =
-    {
-    "speech": "",
-    "displayText": "",
-    "messages": [
-                    {
-                      "title": "Your Transaction History as of" + getDateTime(),
-                      "subtitle": "Account No:...xxx356:",
-                      "buttons": [
-                        {
-                          "text": "+$1,450.000.00 on 12/09  Deposit"
-
-                        }
-                      ],
-                      "type": 1
-                    }
-                  ],
-    "contextOut": [],
-    "source": "US Bank"
-    }
-    res.send(response);
-
-}
-
-
-
   } else {
     var response =
       {
