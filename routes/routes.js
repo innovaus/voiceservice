@@ -172,22 +172,45 @@ subtitle = "CD xxx478: $400,655.00";
 var handleTransactionHistory = function(req, res) {
   
   console.log(req.body.originalRequest.source);
-/*    var accountType = req.body.result.parameters.accountType;
-    if(accountType == null || accountType == "" ){
+   var accountType = req.body.result.parameters.accountType;
+  if(accountType == null || accountType == "" ){
       var branchResponse =
                 {
-                "speech": "Please provide a Account Type",
+                "speech": "",
                 "displayText": "",
-                "data": {},
+                "messages": [
+                    {
+                      "title": "Choose Account Type: ",
+                      "subtitle": "",
+                      "buttons": [
+                        {
+                          "text": "Checking xx356",
+                          "postback": "Checking"
+                        },
+                        {
+                          "text": "Saving xxx432",
+                          "postback": "Saving"
+                        },
+                        {
+                          "text": "CD xxx478",
+                          "postback": "CD"
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
+                
                 "contextOut": [],
                 "source": "U.S Bank"
                 }
-
+    
       res.send(branchResponse);
       return;
-  */
+    }
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    var response =
+    
+    if (accountType == 'checkings'){
+ var response =
     {
     "speech": "",
     "displayText": "",
@@ -216,6 +239,64 @@ var handleTransactionHistory = function(req, res) {
     "source": "US Bank"
     }
     res.send(response);
+  
+}else if(accountType == 'savings'){
+var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
+                    {
+                      "title": "Your Transaction History as of" + getDateTime(),
+                      "subtitle": "Account No:...xxx356:",
+                      "buttons": [
+                        {
+                          "text": "-$3459.90 on 12/03 Macys",
+                          "postback": "-$3459.90 on 12/03 Macys"
+                        },
+                        {
+                          "text": "-$239.98 on 12/05 Sears",
+                          "postback": "-$239.98 on 12/05 Sears"
+                        },
+                        {
+                          "text": "-$2000.45 on 12/08 Transfer",
+                          "postback": "-$2000.45 on 12/08 Transfer"
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
+    "contextOut": [],
+    "source": "US Bank"
+    }
+    res.send(response);
+}else if(accountType == 'CD') {
+var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
+                    {
+                      "title": "Your Transaction History as of" + getDateTime(),
+                      "subtitle": "Account No:...xxx356:",
+                      "buttons": [
+                        {
+                          "text": "+$1,450.000.00 on 12/09  Deposit"
+                         
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
+    "contextOut": [],
+    "source": "US Bank"
+    }
+    res.send(response);
+
+}
+    
+    
+    
   } else {
     var response =
       {
