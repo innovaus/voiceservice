@@ -96,15 +96,15 @@ var handleAccountBalance = function(req, res) {
                       "buttons": [
                         {
                           "text": "Checking xx356",
-                          "postback": "Checking xx356"
+                          "postback": "Checking"
                         },
                         {
                           "text": "Saving xxx432",
-                          "postback": "Saving xxx432"
+                          "postback": "Saving"
                         },
                         {
                           "text": "CD xxx478",
-                          "postback": "CD xxx478"
+                          "postback": "CD"
                         }
                       ],
                       "type": 1
