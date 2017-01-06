@@ -165,7 +165,7 @@ var handleAccountBalance = function(req, res) {
   } else {
     var response =
       {
-      "speech": "Your Balance as of " + getDateTime() + "in " + subtitle ,
+      "speech": "Your Balance as of " + getDateTime() + " in " + subtitle ,
       "displayText": "",
       "data": {},
       "contextOut": [],
@@ -174,49 +174,57 @@ var handleAccountBalance = function(req, res) {
     res.send(response);
   }
 }
-
 // End handleAccountBalance
-
 
 // Start  handleTransactionHistory
 var handleTransactionHistory = function(req, res) {
-  console.log(">> handleTransactionHistory");
   console.log(req.body.result.parameters.accountType);
   var accountType = req.body.result.parameters.accountType;
   if(accountType == null || accountType == "" ){
-      console.log(">> accountType == null");
+    if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
       var branchResponse =
-                {
-                "speech": "",
-                "displayText": "",
-                "messages": [
                     {
-                      "title": "Choose Account Type: ",
-                      "subtitle": "",
-                      "buttons": [
+                    "speech": "",
+                    "displayText": "",
+                    "messages": [
                         {
-                          "text": "Checking xx356",
-                          "postback": "Checking"
-                        },
-                        {
-                          "text": "Saving xxx432",
-                          "postback": "Saving"
-                        },
-                        {
-                          "text": "CD xxx478",
-                          "postback": "CD"
+                          "title": "Choose Account Type: ",
+                          "subtitle": "",
+                          "buttons": [
+                            {
+                              "text": "Checking xx356",
+                              "postback": "Checking"
+                            },
+                            {
+                              "text": "Saving xxx432",
+                              "postback": "Saving"
+                            },
+                            {
+                              "text": "CD xxx478",
+                              "postback": "CD"
+                            }
+                          ],
+                          "type": 1
                         }
                       ],
-                      "type": 1
+
+                    "contextOut": [],
+                    "source": "U.S Bank"
                     }
-                  ],
 
-                "contextOut": [],
-                "source": "U.S Bank"
-                }
-
-      res.send(branchResponse);
-      return;
+          res.send(branchResponse);
+          return;
+      } else {
+        var response =
+          {
+          "speech": "Choose Account Type, Say Checkings, Savings, CD",
+          "displayText": "",
+          "data": {},
+          "contextOut": [],
+          "source": "US Bank"
+          }
+        res.send(response);
+      }
     }
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     console.log(">> accountType != null");
@@ -469,7 +477,7 @@ var getDateTime =function () {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    var dateTime = year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec + "CT"
+    var dateTime = year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec + " CT"
 
     return dateTime;
 
