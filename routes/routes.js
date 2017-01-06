@@ -120,15 +120,13 @@ var handleAccountBalance = function(req, res) {
     }
 
     var subtitle;
-if (accountType == 'checkings'){
- subtitle = "Checking xxx356: $15,382.57";
-
-}else if(accountType == 'savings'){
-subtitle = "Saving  xxx432: $4,655.00";
-}else if(accountType == 'CD') {
-subtitle = "CD xxx478: $400,655.00";
-
-}
+    if (accountType == 'checkings'){
+      subtitle = "Checking xxx356: $15,382.57";
+    }else if(accountType == 'savings'){
+      subtitle = "Saving  xxx432: $4,655.00";
+    }else if(accountType == 'CD') {
+      subtitle = "CD xxx478: $400,655.00";
+    }
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
@@ -142,7 +140,7 @@ subtitle = "CD xxx478: $400,655.00";
                       "buttons": [
                         {
                           "text": "Transactions",
-                          "postback": "Transactions"
+                          "postback": "Transactions of" + accountType
                         }
                       ],
                       "type": 1
