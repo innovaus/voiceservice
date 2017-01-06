@@ -140,7 +140,7 @@ var handleAccountBalance = function(req, res) {
                       "buttons": [
                         {
                           "text": "Transactions",
-                          "postback": "Transactions of" + accountType
+                          "postback": "Transactions of Checkings"
                         }
                       ],
                       "type": 1
