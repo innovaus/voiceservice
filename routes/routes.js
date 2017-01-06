@@ -7,206 +7,133 @@ var appRouter = function(app) {
 
   app.post("/usbservice", function(req, res) {
     console.log(req.body);
-    if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-      var response =
-      {
-      "speech": "",
-      "displayText": "",
-      "messages": [
-                      {
-                        "title": "How may I help you?",
-                        "subtitle": "Please type your question or choose from the below option",
-                        "buttons": [
-                          {
-                            "text": "Balance Check",
-                            "postback": "Balance Check"
-                          },
-                          {
-                            "text": "Transaction History",
-                            "postback": "Transaction History"
-                          },
-                          {
-                            "text": "Branch Locator",
-                            "postback": "branch"
-                          }
-                        ],
-                        "type": 1
-                      }
-                    ],
-      "contextOut": [],
-      "source": "US Bank"
-      }
-      res.send(response);
-    } else {
-      var response =
+    // check the intent Name
+    var intent = req.body.result.metadata.intentName;
+
+    // handle branch locator intent
+    if(intent == 'branch-locator-service') {
+        handleBranchLocator(req, res);
+    }
+    // handle default intent == 'Default Welcome Intent'
+    else {
+      if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+        var response =
         {
-        "speech": "How may I help you? Specify balance check, transaction history, card operations",
+        "speech": "",
         "displayText": "",
-        "data": {},
+        "messages": [
+                        {
+                          "title": "How may I help you?",
+                          "subtitle": "Please type your question or choose from the below option",
+                          "buttons": [
+                            {
+                              "text": "Balance Check",
+                              "postback": "Balance Check"
+                            },
+                            {
+                              "text": "Transaction History",
+                              "postback": "Transaction History"
+                            },
+                            {
+                              "text": "Branch Locator",
+                              "postback": "branch"
+                            }
+                          ],
+                          "type": 1
+                        }
+                      ],
         "contextOut": [],
         "source": "US Bank"
         }
-      res.send(response);
+        res.send(response);
+      } else {
+        var response =
+          {
+          "speech": "How may I help you? Specify balance check, transaction history, card operations",
+          "displayText": "",
+          "data": {},
+          "contextOut": [],
+          "source": "US Bank"
+          }
+        res.send(response);
+      }
     }
   });
 
-  app.post("/branch", function(req, res) {
-      var branchResponse =
-        {
-        "speech": "Barack Hussein Obama II is the 44th and current President of the United States.",
-        "displayText": "Barack Hussein Obama II is the 44th and current President of the United States, and the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University   and Harvard Law School, where ",
-        "data": {},
-        "contextOut": [],
-        "source": "DuckDuckGo"
-        }
-      res.send(branchResponse);
+  app.post("/branchlocator", function(req, res) {
+      handleBranchLocator(req, res);
   });
 
-app.post("/branchalexa", function(req, res) {
-      var zip = 55124;
-      if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
-        var branchResponse =
-                  {
-                 "version": "1.0",
-        "response": {
-            "outputSpeech": {
-            "type": "PlainText",
-            "text": "Please provide zipcode."
-            },
-            "card": {
-                 "content": "",
-                "title": "",
-             "type": "Simple"
-            },
-    "shouldEndSession": true
-  },
-  "sessionAttributes": {}
-                  }
+var handleBranchLocator = function(req, res) {
+  //console.log(req.body);
+  console.log(req.body.originalRequest.source);
+    var zip = req.body.result.parameters.zipcode;
+    if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
+      var branchResponse =
+                {
+                "speech": "Please provide a Zipcode",
+                "displayText": "",
+                "data": {},
+                "contextOut": [],
+                "source": "U.S Bank"
+                }
 
-        res.send(branchResponse);
-        return;
-      }
-      getJsonFromBranchLocator(zip, function(data){
-        if(data.GetListATMorBranchReply.BranchList.length == 0)
-          {
-              spokenMsg = "<speak>The zip code <say-as interpret-as=\"digits\">" + zip +
-                  "</say-as> does not have any nearby branches.</speak>";
-              cardMsg = "The zip code " + zip + " does not have any nearby branches.";
+      res.send(branchResponse);
+      return;
+    }
+    getJsonFromBranchLocator(zip, function(data){
+      if(data.GetListATMorBranchReply.BranchList.length == 0)
+        {
+            spokenMsg = "<speak>The zip code <say-as interpret-as=\"digits\">" + zip +
+                "</say-as> does not have any nearby branches.</speak>";
+            cardMsg = "The zip code " + zip + " does not have any nearby branches.";
 
-              response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
-              return;
-          }
+            response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
+            return;
+        }
 
-          var branchName = data.GetListATMorBranchReply.BranchList[0].Name.replace("&", "and");
-          var distance = data.GetListATMorBranchReply.BranchList[0].Distance + " miles";
-          var streetAddress = data.GetListATMorBranchReply.BranchList[0].LocationIdentifier.Address.AddressLine1.replace("&", "and");
-          var closingTime = getBranchClosingTimeForToday(data.GetListATMorBranchReply.BranchList[0]);
+        var branchName = data.GetListATMorBranchReply.BranchList[0].Name.replace("&", "and");
+        var distance = data.GetListATMorBranchReply.BranchList[0].Distance + " miles";
+        var streetAddress = data.GetListATMorBranchReply.BranchList[0].LocationIdentifier.Address.AddressLine1.replace("&", "and");
+        var closingTime = getBranchClosingTimeForToday(data.GetListATMorBranchReply.BranchList[0]);
 
-          spokenMsg = "<speak>The closest Branch to the <say-as interpret-as=\"digits\">" + zip +
-                  "</say-as> zip code is the " + branchName + " location. It's located " + distance +
-                  " away at " + streetAddress + ". " +
-                  "The branch closes this evening at " + closingTime + ".</speak>";
+        spokenMsg = "<speak>The closest Branch to the <say-as interpret-as=\"digits\">" + zip +
+                "</say-as> zip code is the " + branchName + " location. It's located " + distance +
+                " away at " + streetAddress + ". " +
+                "The branch closes this evening at " + closingTime + ".</speak>";
 
-          cardMsg = "The closest Branch to the " + zip + " zip code is the "
-                  + branchName + " location. It's located " + distance + " away at " + streetAddress + ". " +
-                  "The branch closes this evening at " + closingTime + ".";
+        cardMsg = "The closest Branch to the " + zip + " zip code is the "
+                + branchName + " location. It's located " + distance + " away at " + streetAddress + ". " +
+                "The branch closes this evening at " + closingTime + ".";
 
+
+        if(req.body.originalRequest.source == 'facebook'){
           var branchResponse =
                     {
-                   "version": "1.0",
-        "response": {
-            "outputSpeech": {
-            "type": "PlainText",
-            "text": spokenMsg
-            },
-            "card": {
-                 "content": "",
-                "title": "",
-             "type": "Simple"
-            },
-    "shouldEndSession": true
-  },
-  "sessionAttributes": {}
-                    }
-
-          //response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
+                    "speech": cardMsg,
+                    "displayText": cardMsg,
+                    "data": {},
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                  };
           res.send(branchResponse);
-          return;
-       });
-  });
+        } else {
+          var branchResponse =
+                    {
+                    "speech": spokenMsg,
+                    "displayText": cardMsg,
+                    "data": {},
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                  };
+          res.send(branchResponse);
+        }
 
-
-
-  app.post("/branchlocator", function(req, res) {
-    //console.log(req.body);
-    console.log(req.body.originalRequest.source);
-      var zip = req.body.result.parameters.zipcode;
-      if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
-        var branchResponse =
-                  {
-                  "speech": "Please provide a Zipcode",
-                  "displayText": "",
-                  "data": {},
-                  "contextOut": [],
-                  "source": "U.S Bank"
-                  }
-
-        res.send(branchResponse);
         return;
-      }
-      getJsonFromBranchLocator(zip, function(data){
-        if(data.GetListATMorBranchReply.BranchList.length == 0)
-          {
-              spokenMsg = "<speak>The zip code <say-as interpret-as=\"digits\">" + zip +
-                  "</say-as> does not have any nearby branches.</speak>";
-              cardMsg = "The zip code " + zip + " does not have any nearby branches.";
+     });
+};
 
-              response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
-              return;
-          }
-
-          var branchName = data.GetListATMorBranchReply.BranchList[0].Name.replace("&", "and");
-          var distance = data.GetListATMorBranchReply.BranchList[0].Distance + " miles";
-          var streetAddress = data.GetListATMorBranchReply.BranchList[0].LocationIdentifier.Address.AddressLine1.replace("&", "and");
-          var closingTime = getBranchClosingTimeForToday(data.GetListATMorBranchReply.BranchList[0]);
-
-          spokenMsg = "<speak>The closest Branch to the <say-as interpret-as=\"digits\">" + zip +
-                  "</say-as> zip code is the " + branchName + " location. It's located " + distance +
-                  " away at " + streetAddress + ". " +
-                  "The branch closes this evening at " + closingTime + ".</speak>";
-
-          cardMsg = "The closest Branch to the " + zip + " zip code is the "
-                  + branchName + " location. It's located " + distance + " away at " + streetAddress + ". " +
-                  "The branch closes this evening at " + closingTime + ".";
-
-
-          if(req.body.originalRequest.source == 'facebook'){
-            var branchResponse =
-                      {
-                      "speech": cardMsg,
-                      "displayText": cardMsg,
-                      "data": {},
-                      "contextOut": [],
-                      "source": "U.S Bank"
-                    };
-            res.send(branchResponse);
-          } else {
-            var branchResponse =
-                      {
-                      "speech": spokenMsg,
-                      "displayText": cardMsg,
-                      "data": {},
-                      "contextOut": [],
-                      "source": "U.S Bank"
-                    };
-            res.send(branchResponse);
-          }
-
-          return;
-       });
-  });
-
-  var url = function(zip){
+var url = function(zip){
     return "https://publicrestservice.usbank.com/public/ATMBranchLocatorRESTService_V_8_0/GetListATMorBranch/LocationSearch/" +
                     "StringQuery?application=parasoft&transactionid=cb6b8ea5-3331-408c-9ab3-58e18f2e5f95&output=json&searchtype=E&" +
                     "stringquery=" + zip + "&branchfeatures=BOP&maxitems=1&radius=5";
@@ -265,6 +192,91 @@ var getBranchClosingTimeForToday = function(branch){
     if(hour < 12)
         return hour + ":" + minutes + "AM";
 };
+
+app.post("/branch", function(req, res) {
+    var branchResponse =
+      {
+      "speech": "Barack Hussein Obama II is the 44th and current President of the United States.",
+      "displayText": "Barack Hussein Obama II is the 44th and current President of the United States, and the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University   and Harvard Law School, where ",
+      "data": {},
+      "contextOut": [],
+      "source": "DuckDuckGo"
+      }
+    res.send(branchResponse);
+});
+
+app.post("/branchalexa", function(req, res) {
+    var zip = 55124;
+    if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
+      var branchResponse =
+                {
+               "version": "1.0",
+      "response": {
+          "outputSpeech": {
+          "type": "PlainText",
+          "text": "Please provide zipcode."
+          },
+          "card": {
+               "content": "",
+              "title": "",
+           "type": "Simple"
+          },
+  "shouldEndSession": true
+},
+"sessionAttributes": {}
+                }
+
+      res.send(branchResponse);
+      return;
+    }
+    getJsonFromBranchLocator(zip, function(data){
+      if(data.GetListATMorBranchReply.BranchList.length == 0)
+        {
+            spokenMsg = "<speak>The zip code <say-as interpret-as=\"digits\">" + zip +
+                "</say-as> does not have any nearby branches.</speak>";
+            cardMsg = "The zip code " + zip + " does not have any nearby branches.";
+
+            response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
+            return;
+        }
+
+        var branchName = data.GetListATMorBranchReply.BranchList[0].Name.replace("&", "and");
+        var distance = data.GetListATMorBranchReply.BranchList[0].Distance + " miles";
+        var streetAddress = data.GetListATMorBranchReply.BranchList[0].LocationIdentifier.Address.AddressLine1.replace("&", "and");
+        var closingTime = getBranchClosingTimeForToday(data.GetListATMorBranchReply.BranchList[0]);
+
+        spokenMsg = "<speak>The closest Branch to the <say-as interpret-as=\"digits\">" + zip +
+                "</say-as> zip code is the " + branchName + " location. It's located " + distance +
+                " away at " + streetAddress + ". " +
+                "The branch closes this evening at " + closingTime + ".</speak>";
+
+        cardMsg = "The closest Branch to the " + zip + " zip code is the "
+                + branchName + " location. It's located " + distance + " away at " + streetAddress + ". " +
+                "The branch closes this evening at " + closingTime + ".";
+
+        var branchResponse =
+                  {
+                 "version": "1.0",
+      "response": {
+          "outputSpeech": {
+          "type": "PlainText",
+          "text": spokenMsg
+          },
+          "card": {
+               "content": "",
+              "title": "",
+           "type": "Simple"
+          },
+  "shouldEndSession": true
+},
+"sessionAttributes": {}
+                  }
+
+        //response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
+        res.send(branchResponse);
+        return;
+     });
+});
 
   app.get("/account", function(req, res) {
     var accountMock = {
