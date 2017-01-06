@@ -87,9 +87,30 @@ var handleAccountBalance = function(req, res) {
     if(accountType == null || accountType == "" ){
       var branchResponse =
                 {
-                "speech": "Please provide a Account Type",
+                "speech": "",
                 "displayText": "",
-                "data": {},
+                "messages": [
+                    {
+                      "title": "Choose Account Type: ",
+                      "subtitle": "",
+                      "buttons": [
+                        {
+                          "text": "Checking xx356",
+                          "postback": "Checking xx356"
+                        },
+                        {
+                          "text": "Saving xxx432",
+                          "postback": "Saving xxx432"
+                        },
+                        {
+                          "text": "CD xxx478",
+                          "postback": "CD xxx478"
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
+                
                 "contextOut": [],
                 "source": "U.S Bank"
                 }
