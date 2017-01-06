@@ -14,55 +14,132 @@ var appRouter = function(app) {
     if(intent == 'branch-locator-service') {
         handleBranchLocator(req, res);
     }
+    // handle account-service
+    else if(intent == 'account-service'){
+        handleAccountBalance(req, res);
+    }
     // handle default intent == 'Default Welcome Intent'
     else {
-      if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-        var response =
-        {
-        "speech": "",
-        "displayText": "",
-        "messages": [
-                        {
-                          "title": "How may I help you?",
-                          "subtitle": "Please type your question or choose from the below option",
-                          "buttons": [
-                            {
-                              "text": "Balance Check",
-                              "postback": "Balance Check"
-                            },
-                            {
-                              "text": "Transaction History",
-                              "postback": "Transaction History"
-                            },
-                            {
-                              "text": "Branch Locator",
-                              "postback": "branch"
-                            }
-                          ],
-                          "type": 1
-                        }
-                      ],
-        "contextOut": [],
-        "source": "US Bank"
-        }
-        res.send(response);
-      } else {
-        var response =
-          {
-          "speech": "How may I help you? Specify balance check, transaction history, card operations",
-          "displayText": "",
-          "data": {},
-          "contextOut": [],
-          "source": "US Bank"
-          }
-        res.send(response);
-      }
+      handleWelcomeIntent(req, res);
     }
   });
 
-  app.post("/branchlocator", function(req, res) {
-      handleBranchLocator(req, res);
-  });
+app.post("/branchlocator", function(req, res) {
+    handleBranchLocator(req, res);
+});
+
+var handleWelcomeIntent = function(req, res) {
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
+                    {
+                      "title": "How may I help you?",
+                      "subtitle": "Please type your question or choose from the below option",
+                      "buttons": [
+                        {
+                          "text": "Balance Check",
+                          "postback": "Balance Check"
+                        },
+                        {
+                          "text": "Transaction History",
+                          "postback": "Transaction History"
+                        },
+                        {
+                          "text": "Branch Locator",
+                          "postback": "branch"
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
+    "contextOut": [],
+    "source": "US Bank"
+    }
+    res.send(response);
+  } else {
+    var response =
+      {
+      "speech": "How may I help you? Specify balance check, transaction history, branch locator",
+      "displayText": "",
+      "data": {},
+      "contextOut": [],
+      "source": "US Bank"
+      }
+    res.send(response);
+  }
+}
+
+var handleAccountBalance = function(req, res) {
+  //console.log(req.body);
+  console.log(req.body.originalRequest.source);
+    var accountType = req.body.result.parameters.accountType;
+    if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
+      var branchResponse =
+                {
+                "speech": "Please provide a Zipcode",
+                "displayText": "",
+                "data": {},
+                "contextOut": [],
+                "source": "U.S Bank"
+                }
+
+      res.send(branchResponse);
+      return;
+    }
+    getJsonFromBranchLocator(zip, function(data){
+      if(data.GetListATMorBranchReply.BranchList.length == 0)
+        {
+            spokenMsg = "<speak>The zip code <say-as interpret-as=\"digits\">" + zip +
+                "</say-as> does not have any nearby branches.</speak>";
+            cardMsg = "The zip code " + zip + " does not have any nearby branches.";
+
+            response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
+            return;
+        }
+
+        var branchName = data.GetListATMorBranchReply.BranchList[0].Name.replace("&", "and");
+        var distance = data.GetListATMorBranchReply.BranchList[0].Distance + " miles";
+        var streetAddress = data.GetListATMorBranchReply.BranchList[0].LocationIdentifier.Address.AddressLine1.replace("&", "and");
+        var closingTime = getBranchClosingTimeForToday(data.GetListATMorBranchReply.BranchList[0]);
+
+        spokenMsg = "<speak>The closest Branch to the <say-as interpret-as=\"digits\">" + zip +
+                "</say-as> zip code is the " + branchName + " location. It's located " + distance +
+                " away at " + streetAddress + ". " +
+                "The branch closes this evening at " + closingTime + ".</speak>";
+
+        cardMsg = "The closest Branch to the " + zip + " zip code is the "
+                + branchName + " location. It's located " + distance + " away at " + streetAddress + ". " +
+                "The branch closes this evening at " + closingTime + ".";
+
+
+        if(req.body.originalRequest.source == 'facebook'){
+          var branchResponse =
+                    {
+                    "speech": cardMsg,
+                    "displayText": cardMsg,
+                    "data": {},
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                  };
+          res.send(branchResponse);
+        } else {
+          var branchResponse =
+                    {
+                    "speech": spokenMsg,
+                    "displayText": cardMsg,
+                    "data": {},
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                  };
+          res.send(branchResponse);
+        }
+
+        return;
+     });
+};
 
 var handleBranchLocator = function(req, res) {
   //console.log(req.body);
