@@ -18,6 +18,11 @@ var appRouter = function(app) {
     else if(intent == 'account-service'){
         handleAccountBalance(req, res);
     }
+    // handle Transaction History
+    else if (intent == 'transaction-service'){
+        handleTransactionHistory(req, res);
+    }
+
     // handle default intent == 'Default Welcome Intent'
     else {
       handleWelcomeIntent(req, res);
@@ -72,14 +77,17 @@ var handleWelcomeIntent = function(req, res) {
   }
 }
 
+
+// Start handleAccountBalance
+
 var handleAccountBalance = function(req, res) {
-  //console.log(req.body);
+  
   console.log(req.body.originalRequest.source);
     var accountType = req.body.result.parameters.accountType;
-    if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
+    if(accountType == null || accountType == "" ){
       var branchResponse =
                 {
-                "speech": "Please provide a Zipcode",
+                "speech": "Please provide a Account Type",
                 "displayText": "",
                 "data": {},
                 "contextOut": [],
@@ -88,58 +96,107 @@ var handleAccountBalance = function(req, res) {
 
       res.send(branchResponse);
       return;
+  
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
+                    {
+                      "title": "Your Balance as of " + getDateTime,
+                      "subtitle": "Checking xxx356: $15,382.57",
+                      "buttons": [
+                        {
+                          "text": "Transactions",
+                          "postback": "Transactions"
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
+    "contextOut": [],
+    "source": "US Bank"
     }
-    getJsonFromBranchLocator(zip, function(data){
-      if(data.GetListATMorBranchReply.BranchList.length == 0)
-        {
-            spokenMsg = "<speak>The zip code <say-as interpret-as=\"digits\">" + zip +
-                "</say-as> does not have any nearby branches.</speak>";
-            cardMsg = "The zip code " + zip + " does not have any nearby branches.";
+    res.send(response);
+  } else {
+    var response =
+      {
+      "speech": "Your Balance as of " + getDateTime + "in Checking xxx356: $15,382.57",
+      "displayText": "",
+      "data": {},
+      "contextOut": [],
+      "source": "US Bank"
+      }
+    res.send(response);
+  }
+}
 
-            response.tellWithCard(spokenMsg, "Branch Locator", cardMsg);
-            return;
-        }
-
-        var branchName = data.GetListATMorBranchReply.BranchList[0].Name.replace("&", "and");
-        var distance = data.GetListATMorBranchReply.BranchList[0].Distance + " miles";
-        var streetAddress = data.GetListATMorBranchReply.BranchList[0].LocationIdentifier.Address.AddressLine1.replace("&", "and");
-        var closingTime = getBranchClosingTimeForToday(data.GetListATMorBranchReply.BranchList[0]);
-
-        spokenMsg = "<speak>The closest Branch to the <say-as interpret-as=\"digits\">" + zip +
-                "</say-as> zip code is the " + branchName + " location. It's located " + distance +
-                " away at " + streetAddress + ". " +
-                "The branch closes this evening at " + closingTime + ".</speak>";
-
-        cardMsg = "The closest Branch to the " + zip + " zip code is the "
-                + branchName + " location. It's located " + distance + " away at " + streetAddress + ". " +
-                "The branch closes this evening at " + closingTime + ".";
+// End handleAccountBalance 
 
 
-        if(req.body.originalRequest.source == 'facebook'){
-          var branchResponse =
+// Start  handleTransactionHistory
+var handleTransactionHistory = function(req, res) {
+  
+  console.log(req.body.originalRequest.source);
+/*    var accountType = req.body.result.parameters.accountType;
+    if(accountType == null || accountType == "" ){
+      var branchResponse =
+                {
+                "speech": "Please provide a Account Type",
+                "displayText": "",
+                "data": {},
+                "contextOut": [],
+                "source": "U.S Bank"
+                }
+
+      res.send(branchResponse);
+      return;
+  */
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+    var response =
+    {
+    "speech": "",
+    "displayText": "",
+    "messages": [
                     {
-                    "speech": cardMsg,
-                    "displayText": cardMsg,
-                    "data": {},
-                    "contextOut": [],
-                    "source": "U.S Bank"
-                  };
-          res.send(branchResponse);
-        } else {
-          var branchResponse =
-                    {
-                    "speech": spokenMsg,
-                    "displayText": cardMsg,
-                    "data": {},
-                    "contextOut": [],
-                    "source": "U.S Bank"
-                  };
-          res.send(branchResponse);
-        }
+                      "title": "Your Transaction History as of" + getDateTime,
+                      "subtitle": "Account No:...xxx356:",
+                      "buttons": [
+                        {
+                          "text": "-$159.90 on 12/01 Web Author",
+                          "postback": "-$159.90 on 12/01 Web Author"
+                        },
+                        {
+                          "text": "-$19.98 on 12/01 Debit Purc",
+                          "postback": "-$19.98 on 12/01 Debit Purc"
+                        },
+                        {
+                          "text": "+$856.45 on 12/02 Electrnoic",
+                          "postback": "+$856.45 on 12/02 Electrnoic"
+                        }
+                      ],
+                      "type": 1
+                    }
+                  ],
+    "contextOut": [],
+    "source": "US Bank"
+    }
+    res.send(response);
+  } else {
+    var response =
+      {
+      "speech": "Your Balance as of :2017-01-06 19:41:46 CT in Checking xxx356: $15,382.57",
+      "displayText": "",
+      "data": {},
+      "contextOut": [],
+      "source": "US Bank"
+      }
+    res.send(response);
+  }
+}
 
-        return;
-     });
-};
+// End handleTransactionHistory
 
 var handleBranchLocator = function(req, res) {
   //console.log(req.body);
@@ -269,6 +326,33 @@ var getBranchClosingTimeForToday = function(branch){
     if(hour < 12)
         return hour + ":" + minutes + "AM";
 };
+
+var getDateTime =function () {
+
+    var date = new Date();
+
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+
+    var year = date.getFullYear();
+
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;
+
+    getDateTime = year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec + "CT"
+
+    return getDateTimeß;
+
+}
 
 app.post("/branch", function(req, res) {
     var branchResponse =
