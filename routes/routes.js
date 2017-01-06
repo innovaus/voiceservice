@@ -81,7 +81,7 @@ var handleWelcomeIntent = function(req, res) {
 // Start handleAccountBalance
 
 var handleAccountBalance = function(req, res) {
-  
+
   console.log(req.body.originalRequest.source);
     var accountType = req.body.result.parameters.accountType;
     if(accountType == null || accountType == "" ){
@@ -110,11 +110,11 @@ var handleAccountBalance = function(req, res) {
                       "type": 1
                     }
                   ],
-                
+
                 "contextOut": [],
                 "source": "U.S Bank"
                 }
-    
+
       res.send(branchResponse);
       return;
     }
@@ -122,14 +122,14 @@ var handleAccountBalance = function(req, res) {
     var subtitle;
 if (accountType == 'checkings'){
  subtitle = "Checking xxx356: $15,382.57";
-  
+
 }else if(accountType == 'savings'){
 subtitle = "Saving  xxx432: $4,655.00";
 }else if(accountType == 'CD') {
 subtitle = "CD xxx478: $400,655.00";
 
 }
-   
+
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
     {
@@ -165,15 +165,16 @@ subtitle = "CD xxx478: $400,655.00";
   }
 }
 
-// End handleAccountBalance 
+// End handleAccountBalance
 
 
 // Start  handleTransactionHistory
 var handleTransactionHistory = function(req, res) {
-  
-  console.log(req.body.originalRequest.source);
-   var accountType = req.body.result.parameters.accountType;
+  console.log(">> handleTransactionHistory");
+  console.log(req.body.result.parameters.accountType);
+  var accountType = req.body.result.parameters.accountType;
   if(accountType == null || accountType == "" ){
+      console.log(">> accountType == null");
       var branchResponse =
                 {
                 "speech": "",
@@ -199,16 +200,16 @@ var handleTransactionHistory = function(req, res) {
                       "type": 1
                     }
                   ],
-                
+
                 "contextOut": [],
                 "source": "U.S Bank"
                 }
-    
+
       res.send(branchResponse);
       return;
     }
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    
+    console.log(">> accountType != null");
     if (accountType == 'checkings'){
  var response =
     {
@@ -239,7 +240,7 @@ var handleTransactionHistory = function(req, res) {
     "source": "US Bank"
     }
     res.send(response);
-  
+
 }else if(accountType == 'savings'){
 var response =
     {
@@ -282,7 +283,7 @@ var response =
                       "buttons": [
                         {
                           "text": "+$1,450.000.00 on 12/09  Deposit"
-                         
+
                         }
                       ],
                       "type": 1
@@ -294,9 +295,9 @@ var response =
     res.send(response);
 
 }
-    
-    
-    
+
+
+
   } else {
     var response =
       {
@@ -443,7 +444,7 @@ var getBranchClosingTimeForToday = function(branch){
 
 var getDateTime =function () {
 
-    
+
     var date = new Date();
 
     var hour = date.getHours();
