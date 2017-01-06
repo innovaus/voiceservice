@@ -93,10 +93,10 @@ var handleAccountBalance = function(req, res) {
                 "contextOut": [],
                 "source": "U.S Bank"
                 }
-
+    
       res.send(branchResponse);
       return;
-  
+    }
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
     {
