@@ -104,7 +104,7 @@ var handleAccountBalance = function(req, res) {
     "displayText": "",
     "messages": [
                     {
-                      "title": "Your Balance as of " + getDateTime,
+                      "title": "Your Balance as of " + getDateTime(),
                       "subtitle": "Checking xxx356: $15,382.57",
                       "buttons": [
                         {
@@ -122,7 +122,7 @@ var handleAccountBalance = function(req, res) {
   } else {
     var response =
       {
-      "speech": "Your Balance as of " + getDateTime + "in Checking xxx356: $15,382.57",
+      "speech": "Your Balance as of " + getDateTime() + "in Checking xxx356: $15,382.57",
       "displayText": "",
       "data": {},
       "contextOut": [],
@@ -160,7 +160,7 @@ var handleTransactionHistory = function(req, res) {
     "displayText": "",
     "messages": [
                     {
-                      "title": "Your Transaction History as of" + getDateTime,
+                      "title": "Your Transaction History as of" + getDateTime(),
                       "subtitle": "Account No:...xxx356:",
                       "buttons": [
                         {
@@ -172,8 +172,8 @@ var handleTransactionHistory = function(req, res) {
                           "postback": "-$19.98 on 12/01 Debit Purc"
                         },
                         {
-                          "text": "+$856.45 on 12/02 Electrnoic",
-                          "postback": "+$856.45 on 12/02 Electrnoic"
+                          "text": "+$856.45 on 12/02 Electronic",
+                          "postback": "+$856.45 on 12/02 Electronic"
                         }
                       ],
                       "type": 1
@@ -329,6 +329,7 @@ var getBranchClosingTimeForToday = function(branch){
 
 var getDateTime =function () {
 
+    
     var date = new Date();
 
     var hour = date.getHours();
@@ -348,9 +349,9 @@ var getDateTime =function () {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    getDateTime = year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec + "CT"
+    var dateTime = year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec + "CT"
 
-    return getDateTimeß;
+    return dateTime;
 
 }
 
