@@ -227,68 +227,67 @@ var handleTransactionHistory = function(req, res) {
       }
     }
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-    console.log(">> accountType != null");
     if (accountType == 'checkings'){
- var response =
-    {
-    "speech": "",
-    "displayText": "",
-    "messages": [
-                    {
-                      "title": "Your Transaction History as of" + getDateTime(),
-                      "subtitle": "Account No:...xxx356:",
-                      "buttons": [
-                        {
-                          "text": "-$159.90 on 12/01 Web Author",
-                          "postback": "-$159.90 on 12/01 Web Author"
-                        },
-                        {
-                          "text": "-$19.98 on 12/01 Debit Purc",
-                          "postback": "-$19.98 on 12/01 Debit Purc"
-                        },
-                        {
-                          "text": "+$856.45 on 12/02 Electronic",
-                          "postback": "+$856.45 on 12/02 Electronic"
-                        }
-                      ],
-                      "type": 1
-                    }
-                  ],
-    "contextOut": [],
-    "source": "US Bank"
-    }
-    res.send(response);
+       var response =
+          {
+          "speech": "",
+          "displayText": "",
+          "messages": [
+                          {
+                            "title": "Your Transaction History as of" + getDateTime(),
+                            "subtitle": "Account No:...xxx356:",
+                            "buttons": [
+                              {
+                                "text": "-$159.90 on 12/01 Web Author",
+                                "postback": "-$159.90 on 12/01 Web Author"
+                              },
+                              {
+                                "text": "-$19.98 on 12/01 Debit Purc",
+                                "postback": "-$19.98 on 12/01 Debit Purc"
+                              },
+                              {
+                                "text": "+$856.45 on 12/02 Electronic",
+                                "postback": "+$856.45 on 12/02 Electronic"
+                              }
+                            ],
+                            "type": 1
+                          }
+                        ],
+          "contextOut": [],
+          "source": "US Bank"
+          }
+          res.send(response);
 
-}else if(accountType == 'savings'){
-    var response =
-        {
-        "speech": "",
-        "displayText": "",
-        "messages": [
-                        {
-                          "title": "Your Transaction History as of" + getDateTime(),
-                          "subtitle": "Account No:...xxx432:",
-                          "buttons": [
+    }else if(accountType == 'savings'){
+        var response =
+            {
+            "speech": "",
+            "displayText": "",
+            "messages": [
                             {
-                              "text": "-$3459.90 on 12/03 Macys",
-                              "postback": "-$3459.90 on 12/03 Macys"
-                            },
-                            {
-                              "text": "-$239.98 on 12/05 Sears",
-                              "postback": "-$239.98 on 12/05 Sears"
-                            },
-                            {
-                              "text": "-$2000.45 on 12/08 Transfer",
-                              "postback": "-$2000.45 on 12/08 Transfer"
+                              "title": "Your Transaction History as of" + getDateTime(),
+                              "subtitle": "Account No:...xxx432:",
+                              "buttons": [
+                                {
+                                  "text": "-$3459.90 on 12/03 Macys",
+                                  "postback": "-$3459.90 on 12/03 Macys"
+                                },
+                                {
+                                  "text": "-$239.98 on 12/05 Sears",
+                                  "postback": "-$239.98 on 12/05 Sears"
+                                },
+                                {
+                                  "text": "-$2000.45 on 12/08 Transfer",
+                                  "postback": "-$2000.45 on 12/08 Transfer"
+                                }
+                              ],
+                              "type": 1
                             }
                           ],
-                          "type": 1
-                        }
-                      ],
-        "contextOut": [],
-        "source": "US Bank"
-        }
-        res.send(response);
+            "contextOut": [],
+            "source": "US Bank"
+            }
+            res.send(response);
     }else if(accountType == 'CD') {
         var response =
             {
@@ -312,15 +311,37 @@ var handleTransactionHistory = function(req, res) {
             res.send(response);
     }
   } else {
-    var response =
-      {
-      "speech": "Your Balance as of :2017-01-06 19:41:46 CT in Checking xxx356: $15,382.57",
-      "displayText": "",
-      "data": {},
-      "contextOut": [],
-      "source": "US Bank"
-      }
-    res.send(response);
+    if (accountType == 'checkings'){
+      var response =
+        {
+        "speech": "Your Transaction History as of" + getDateTime()+" in Account No:...xxx356: -$159.90 on 12/01 Web Author",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }else if(accountType == 'savings'){
+      var response =
+        {
+        "speech": "Your Transaction History as of" + getDateTime()+" in Account No:...xxx432: -$3459.90 on 12/03 Macys",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }else if(accountType == 'CD') {
+      var response =
+        {
+        "speech": "Your Transaction History as of" + getDateTime()+" in Account No:...xxx478: +$1,450.000.00 on 12/09  Deposit",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
+        }
+      res.send(response);
+    }
   }
 }
 
