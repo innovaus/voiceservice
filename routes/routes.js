@@ -349,7 +349,6 @@ var handleTransactionHistory = function(req, res) {
 
 var handleBranchLocator = function(req, res) {
   //console.log(req.body);
-  console.log(req.body.originalRequest.source);
     var zip = req.body.result.parameters.zipcode;
     if(zip == null || zip == "" || zip.length < 5 || zip.length > 5){
       var branchResponse =
@@ -390,7 +389,7 @@ var handleBranchLocator = function(req, res) {
                 "The branch closes this evening at " + closingTime + ".";
 
 
-        if(req.body.originalRequest.source == 'facebook'){
+        if(req.body.originalRequest.source!= null && req.body.originalRequest.source == 'facebook'){
           var branchResponse =
                     {
                     "speech": cardMsg,
