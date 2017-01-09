@@ -75,7 +75,7 @@ var handleWelcomeIntent = function(req, res) {
                       "subtitle": "A live agent will assist you for your queries",
                       "buttons": [
                         {
-                          "text": "postback",
+                          "text": "Connect Me",
                           "postback": "Connect Me"
                         }
                       ],
