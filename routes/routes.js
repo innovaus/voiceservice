@@ -58,7 +58,29 @@ var handleWelcomeIntent = function(req, res) {
                         }
                       ],
                       "type": 1
-                    }
+                    },
+                    {
+                      "title": "Other Queries",
+                      "subtitle": "",
+                      "buttons": [
+                        {
+                          "text": "Let me Type",
+                          "postback": "Let me Type"
+                        }
+                      ],
+                      "type": 1
+                    },
+                    {
+                      "title": "Connect with Live Agent",
+                      "subtitle": "A live agent will assist you for your queries",
+                      "buttons": [
+                        {
+                          "text": "postback",
+                          "postback": "Connect Me"
+                        }
+                      ],
+                      "type": 1
+                    },
                   ],
     "contextOut": [],
     "source": "US Bank"
