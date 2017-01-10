@@ -123,7 +123,7 @@ var handleLogin = function(req, res) {
                           "buttons": [
                             {
                               "text": "Log In",
-                              "url": "https://usblogin.herokuapp.com/login.php"
+                              "postback": "https://usblogin.herokuapp.com/login.php"
                             }
                           ],
                           "type": 1
