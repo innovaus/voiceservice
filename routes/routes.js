@@ -10,8 +10,15 @@ var appRouter = function(app) {
     // check the intent Name
     var intent = req.body.result.metadata.intentName;
 
+   
+   // handle login 
+
+   if(intent == 'login') {
+        handleLogin(req, res);
+    }
+
     // handle branch locator intent
-    if(intent == 'branch-locator-service') {
+    else if(intent == 'branch-locator-service') {
         handleBranchLocator(req, res);
     }
     // handle account-service
@@ -98,7 +105,52 @@ var handleWelcomeIntent = function(req, res) {
     res.send(response);
   }
 }
+// Start Handle login
 
+var handleLogin = function(req, res) {
+
+  console.log(req.body.originalRequest.source);
+
+      if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+          var branchResponse =
+                    {
+                    "speech": "",
+                    "displayText": "",
+                    "messages": [
+                        {
+                          "title": "If you are an existing client, please login.",
+                          "subtitle": "",
+                          "buttons": [
+                            {
+                              "text": "Log In",
+                              "postback": "Log In"
+                            }
+                          ],
+                          "type": 1
+                        }
+                      ],
+
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                    }
+
+          res.send(branchResponse);
+          return;
+        } else {
+          var response =
+            {
+            "speech": "If you are an existing client, please login. Log In",
+            "displayText": "",
+            "data": {},
+            "contextOut": [],
+            "source": "US Bank"
+            }
+          res.send(response);
+        }
+    
+}
+
+// End Handle Login
 
 // Start handleAccountBalance
 
