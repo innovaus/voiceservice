@@ -139,7 +139,7 @@ var handleLogin = function(req, res) {
         } else {
           var response =
             {
-            "speech": "If you are an existing client, please login. Log In",
+            "speech": "If you are an existing client, please login.",
             "displayText": "",
             "data": {},
             "contextOut": [],
@@ -157,8 +157,8 @@ var handleLogin = function(req, res) {
 var handleAccountBalance = function(req, res) {
 
   console.log(req.body.originalRequest.source);
-    var accountType = req.body.result.parameters.accountType;
-    if(accountType == null || accountType == "" ){
+   // var accountType = req.body.result.parameters.accountType;
+    /*if(accountType == null || accountType == "" ){
       if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
           var branchResponse =
                     {
@@ -203,16 +203,16 @@ var handleAccountBalance = function(req, res) {
             }
           res.send(response);
         }
-    }
+    }*/
 
-    var subtitle;
+ /*   var subtitle;
     if (accountType == 'checkings'){
       subtitle = "Checking xxx356: $15,382.57";
     }else if(accountType == 'savings'){
       subtitle = "Saving  xxx432: $4,655.00";
     }else if(accountType == 'CD') {
       subtitle = "CD xxx478: $400,655.00";
-    }
+    }*/
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
@@ -222,11 +222,33 @@ var handleAccountBalance = function(req, res) {
     "messages": [
                     {
                       "title": "Your Balance as of " + getDateTime(),
-                      "subtitle": subtitle,
+                      "subtitle": "Checking xxx356: $15,382.57",
                       "buttons": [
                         {
                           "text": "Transactions",
-                          "postback": "Transactions of "+ accountType
+                          "postback": "Transactions of Checking"
+                        }
+                      ],
+                      "type": 1
+                    },
+                     {
+                      "title": "Your Balance as of " + getDateTime(),
+                      "subtitle": "Saving  xxx432: $4,655.00",
+                      "buttons": [
+                        {
+                          "text": "Transactions",
+                          "postback": "Transactions of Saving"
+                        }
+                      ],
+                      "type": 1
+                    },
+                     {
+                      "title": "Your Balance as of " + getDateTime(),
+                      "subtitle": "CD xxx478: $400,655.00",
+                      "buttons": [
+                        {
+                          "text": "Transactions",
+                          "postback": "Transactions of CD"
                         }
                       ],
                       "type": 1
