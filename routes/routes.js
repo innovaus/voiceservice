@@ -289,15 +289,15 @@ var handleTransactionHistory = function(req, res) {
                           "buttons": [
                             {
                               "text": "Checking xx356",
-                              "postback": "Checking"
+                              "postback": "Transactions of Checking"
                             },
                             {
                               "text": "Saving xxx432",
-                              "postback": "Saving"
+                              "postback": "Transactions of Saving"
                             },
                             {
                               "text": "CD xxx478",
-                              "postback": "CD"
+                              "postback": "Transactions of CD"
                             }
                           ],
                           "type": 1
