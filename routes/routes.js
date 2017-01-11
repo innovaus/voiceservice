@@ -150,62 +150,6 @@ var handleLogin = function(req, res) {
 // Start handleAccountBalance
 var handleAccountBalance = function(req, res) {
   console.log(req.body.originalRequest.source);
-   // var accountType = req.body.result.parameters.accountType;
-    /*if(accountType == null || accountType == "" ){
-      if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-          var branchResponse =
-                    {
-                    "speech": "",
-                    "displayText": "",
-                    "messages": [
-                        {
-                          "title": "Choose Account Type: ",
-                          "subtitle": "",
-                          "buttons": [
-                            {
-                              "text": "Checking xx356",
-                              "postback": "Checking"
-                            },
-                            {
-                              "text": "Saving xxx432",
-                              "postback": "Saving"
-                            },
-                            {
-                              "text": "CD xxx478",
-                              "postback": "CD"
-                            }
-                          ],
-                          "type": 1
-                        }
-                      ],
-
-                    "contextOut": [],
-                    "source": "U.S Bank"
-                    }
-
-          res.send(branchResponse);
-          return;
-        } else {
-          var response =
-            {
-            "speech": "Choose Account Type, Say Checkings, Savings, CD",
-            "displayText": "",
-            "data": {},
-            "contextOut": [],
-            "source": "US Bank"
-            }
-          res.send(response);
-        }
-    }*/
-
- /*   var subtitle;
-    if (accountType == 'checkings'){
-      subtitle = "Checking xxx356: $15,382.57";
-    }else if(accountType == 'savings'){
-      subtitle = "Saving  xxx432: $4,655.00";
-    }else if(accountType == 'CD') {
-      subtitle = "CD xxx478: $400,655.00";
-    }*/
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
@@ -254,7 +198,10 @@ var handleAccountBalance = function(req, res) {
   } else {
     var response =
       {
-      "speech": "Your Balance as of " + getDateTime() + " in " + "Checking xxx356: $15,382.57"+ "Saving  xxx432: $4,655.00"+"CD xxx478: $400,655.00",
+      "speech": "Your Balance as of " + getDateTime() + " in "
+      + "Checking account ending with 356 is $15,382.57"
+      + "Saving  account ending with 432 is $4,655.00"
+      + "CD account ending with 478 is $400,655.00",
       "displayText": "",
       "data": {},
       "contextOut": [],
@@ -305,7 +252,7 @@ var handleTransactionHistory = function(req, res) {
       } else {
         var response =
           {
-          "speech": "Choose Account Type, Say Checkings, Savings, CD",
+          "speech": "Specify account type, Say Checking, Saving, CD",
           "displayText": "",
           "data": {},
           "contextOut": [],
@@ -402,7 +349,7 @@ var handleTransactionHistory = function(req, res) {
     if (accountType == 'checkings'){
       var response =
         {
-        "speech": "Your Transaction History as of" + getDateTime()+" in Account No:...xxx356: -$159.90 on 12/01 Web Author",
+        "speech": "Your last transaction as of" + getDateTime()+" in Account No 356 is -$159.90 on 12/01 Web Author",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -412,7 +359,7 @@ var handleTransactionHistory = function(req, res) {
     }else if(accountType == 'savings'){
       var response =
         {
-        "speech": "Your Transaction History as of" + getDateTime()+" in Account No:...xxx432: -$3459.90 on 12/03 Macys",
+        "speech": "Your last transaction as of" + getDateTime()+" in Account No 432 is -$3459.90 on 12/03 Macys",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -422,7 +369,7 @@ var handleTransactionHistory = function(req, res) {
     }else if(accountType == 'CD') {
       var response =
         {
-        "speech": "Your Transaction History as of" + getDateTime()+" in Account No:...xxx478: +$1,450.000.00 on 12/09  Deposit",
+        "speech": "Your last transaction as of" + getDateTime()+" in Account No 478 is +$1,450.000.00 on 12/09  Deposit",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -585,7 +532,7 @@ var getDateTime =function () {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    var dateTime = year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec + " CT"
+    var dateTime = year + ":" + month + ":" + day + ":" + hour + ":" + min + " CT"
 
     return dateTime;
 
