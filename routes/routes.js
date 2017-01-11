@@ -14,8 +14,10 @@ var appRouter = function(app) {
    // handle login 
 
    if(intent == 'login') {
+
+     console.log("Log in");
        // handleLogin(req, res);
-       console.log("Log in");
+       
     }
 
     // handle branch locator intent
