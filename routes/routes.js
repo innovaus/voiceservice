@@ -639,8 +639,11 @@ app.post("/branchalexa", function(req, res) {
 });
 
 app.get("/login", function(req, res) {
-    console.log(req.body);
-    res.send("Hello World");
+    console.log(req.query);
+    //res.send("Hello World");
+    //https://oauth-redirect.googleusercontent.com/r/YOUR_PROJECT_ID#access_token=ACCESS_TOKEN&token_type=bearer&state=STATE_STRING
+    res.writeHead(301,{Location: req.query.redirect_uri+"#access_token=1234567890&token_type=bearer&state="+req.query.state});
+    res.end();
 });
 
 }
