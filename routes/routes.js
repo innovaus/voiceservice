@@ -124,7 +124,7 @@ var handleLogin = function(req, res) {
                             {
                               "text": "Log In",
                               "type":"account_link",
-                              "postback": "https://usblogin.herokuapp.com/login.php"
+                              "url": "https://usblogin.herokuapp.com/login.php"
                             }
                           ],
                           "type": 1
