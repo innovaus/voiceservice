@@ -200,8 +200,8 @@ var handleAccountBalance = function(req, res) {
       {
       "speech": "Your Balance as of " + getDateTime() + " in "
       + "Checking account ending with 356 is $15,382.57"
-      + "Saving  account ending with 432 is $4,655.00"
-      + "CD account ending with 478 is $400,655.00",
+      + ", Saving  account ending with 432 is $4,655.00"
+      + ", CD account ending with 478 is $400,655.00",
       "displayText": "",
       "data": {},
       "contextOut": [],
@@ -349,7 +349,7 @@ var handleTransactionHistory = function(req, res) {
     if (accountType == 'checkings'){
       var response =
         {
-        "speech": "Your last transaction as of" + getDateTime()+" in Account No 356 is -$159.90 on 12/01 Web Author",
+        "speech": "Your last transaction as of " + getDateTime()+" in Checking account ending with 356 is -$159.90 on 12/01 Web Author",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -359,7 +359,7 @@ var handleTransactionHistory = function(req, res) {
     }else if(accountType == 'savings'){
       var response =
         {
-        "speech": "Your last transaction as of" + getDateTime()+" in Account No 432 is -$3459.90 on 12/03 Macys",
+        "speech": "Your last transaction as of " + getDateTime()+" in Saving account ending with 432 is -$3459.90 on 12/03 Macys",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -369,7 +369,7 @@ var handleTransactionHistory = function(req, res) {
     }else if(accountType == 'CD') {
       var response =
         {
-        "speech": "Your last transaction as of" + getDateTime()+" in Account No 478 is +$1,450.000.00 on 12/09  Deposit",
+        "speech": "Your last transaction as of " + getDateTime()+" in CD account ending with 478 is +$1,450.000.00 on 12/09  Deposit",
         "displayText": "",
         "data": {},
         "contextOut": [],
