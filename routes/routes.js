@@ -10,14 +10,10 @@ var appRouter = function(app) {
     // check the intent Name
     var intent = req.body.result.metadata.intentName;
 
-   
-   // handle login 
-
+   // handle login
    if(intent == 'login') {
-
      console.log("Log in");
        // handleLogin(req, res);
-       
     }
 
     // handle branch locator intent
@@ -32,7 +28,6 @@ var appRouter = function(app) {
     else if (intent == 'transaction-service'){
         handleTransactionHistory(req, res);
     }
-
     // handle default intent == 'Default Welcome Intent'
     else {
       handleWelcomeIntent(req, res);
@@ -42,7 +37,7 @@ var appRouter = function(app) {
 app.post("/branchlocator", function(req, res) {
     handleBranchLocator(req, res);
 });
-
+// handle welcome intent
 var handleWelcomeIntent = function(req, res) {
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
@@ -108,58 +103,52 @@ var handleWelcomeIntent = function(req, res) {
     res.send(response);
   }
 }
+
 // Start Handle login
-
 var handleLogin = function(req, res) {
-
   console.log(req.body.originalRequest.source);
-
-      if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-          var branchResponse =
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+      var branchResponse =
+                {
+                "speech": "",
+                "displayText": "",
+                "messages": [
                     {
-                    "speech": "",
-                    "displayText": "",
-                    "messages": [
+                      "title": "If you are an existing client, please login.",
+                      "subtitle": "",
+                      "buttons": [
                         {
-                          "title": "If you are an existing client, please login.",
-                          "subtitle": "",
-                          "buttons": [
-                            {
-                              "text": "Log In",
-                              "type":"account_link",
-                              "postback": "https://usblogin.herokuapp.com/login.php"
-                            }
-                          ],
-                          "type": 1
+                          "text": "Log In",
+                          "type":"account_link",
+                          "postback": "https://usblogin.herokuapp.com/login.php"
                         }
                       ],
-
-                    "contextOut": [],
-                    "source": "U.S Bank"
+                      "type": 1
                     }
+                  ],
 
-          res.send(branchResponse);
-          return;
-        } else {
-          var response =
-            {
-            "speech": "If you are an existing client, please login.",
-            "displayText": "",
-            "data": {},
-            "contextOut": [],
-            "source": "US Bank"
-            }
-          res.send(response);
+                "contextOut": [],
+                "source": "U.S Bank"
+                }
+
+      res.send(branchResponse);
+      return;
+    } else {
+      var response =
+        {
+        "speech": "If you are an existing client, please login.",
+        "displayText": "",
+        "data": {},
+        "contextOut": [],
+        "source": "US Bank"
         }
-    
+      res.send(response);
+    }
 }
-
 // End Handle Login
 
 // Start handleAccountBalance
-
 var handleAccountBalance = function(req, res) {
-
   console.log(req.body.originalRequest.source);
    // var accountType = req.body.result.parameters.accountType;
     /*if(accountType == null || accountType == "" ){
@@ -265,7 +254,7 @@ var handleAccountBalance = function(req, res) {
   } else {
     var response =
       {
-      "speech": "Your Balance as of " + getDateTime() + " in " + subtitle ,
+      "speech": "Your Balance as of " + getDateTime() + " in " + "Checking xxx356: $15,382.57"+ "Saving  xxx432: $4,655.00"+"CD xxx478: $400,655.00",
       "displayText": "",
       "data": {},
       "contextOut": [],
@@ -311,7 +300,6 @@ var handleTransactionHistory = function(req, res) {
                     "contextOut": [],
                     "source": "U.S Bank"
                     }
-
           res.send(branchResponse);
           return;
       } else {
