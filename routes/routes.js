@@ -638,6 +638,11 @@ app.post("/branchalexa", function(req, res) {
     }
 });
 
+app.get("/login", function(req, res) {
+    console.log(req.body);
+    res.send("Hello World");
+});
+
 }
 
 module.exports = appRouter;
