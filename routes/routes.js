@@ -158,7 +158,7 @@ var handleAccountBalance = function(req, res) {
     "displayText": "",
     "messages": [
                     {
-                      "title": "Your Balance as of " + getDateTime(),
+                      "title": "Your Balance as of " + getDate() + getTime(),
                       "subtitle": "Checking xxx356: $15,382.57",
                       "buttons": [
                         {
@@ -169,7 +169,7 @@ var handleAccountBalance = function(req, res) {
                       "type": 1
                     },
                      {
-                      "title": "Your Balance as of " + getDateTime(),
+                      "title": "Your Balance as of " + getDate() + getTime(),
                       "subtitle": "Saving  xxx432: $4,655.00",
                       "buttons": [
                         {
@@ -180,7 +180,7 @@ var handleAccountBalance = function(req, res) {
                       "type": 1
                     },
                      {
-                      "title": "Your Balance as of " + getDateTime(),
+                      "title": "Your Balance as of " + getDate() + getTime(),
                       "subtitle": "CD xxx478: $400,655.00",
                       "buttons": [
                         {
@@ -198,8 +198,8 @@ var handleAccountBalance = function(req, res) {
   } else {
     var response =
       {
-      "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDateTime() +
-    "</say-as> in "
+      "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">2:30pm</say-as> in "
       + "Checking account ending with 356 is $15,382.57"
       + ", Saving  account ending with 432 is $4,655.00"
       + ", CD account ending with 478 is $400,655.00 </speak>",
@@ -270,7 +270,7 @@ var handleTransactionHistory = function(req, res) {
           "displayText": "",
           "messages": [
                           {
-                            "title": "Your Transaction History as of" + getDateTime(),
+                            "title": "Your Transaction History as of" + getDate() + getTime(),
                             "subtitle": "Account No:...xxx356:",
                             "buttons": [
                               {
@@ -301,7 +301,7 @@ var handleTransactionHistory = function(req, res) {
             "displayText": "",
             "messages": [
                             {
-                              "title": "Your Transaction History as of" + getDateTime(),
+                              "title": "Your Transaction History as of" + getDate() + getTime(),
                               "subtitle": "Account No:...xxx432:",
                               "buttons": [
                                 {
@@ -331,7 +331,7 @@ var handleTransactionHistory = function(req, res) {
             "displayText": "",
             "messages": [
                             {
-                              "title": "Your Transaction History as of" + getDateTime(),
+                              "title": "Your Transaction History as of" + getDate() + getTime(),
                               "subtitle": "Account No:...xxx478:",
                               "buttons": [
                                 {
@@ -350,7 +350,7 @@ var handleTransactionHistory = function(req, res) {
     if (accountType == 'checkings'){
       var response =
         {
-        "speech": "Your last transaction as of " + getDateTime()+" in Checking account ending with 356 is -$159.90 on 12/01 Web Author",
+        "speech": "Your last transaction as of " + getDate()+" in Checking account ending with 356 is -$159.90 on 12/01 Web Author",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -360,7 +360,7 @@ var handleTransactionHistory = function(req, res) {
     }else if(accountType == 'savings'){
       var response =
         {
-        "speech": "Your last transaction as of " + getDateTime()+" in Saving account ending with 432 is -$3459.90 on 12/03 Macys",
+        "speech": "Your last transaction as of " + getDate()+" in Saving account ending with 432 is -$3459.90 on 12/03 Macys",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -370,7 +370,7 @@ var handleTransactionHistory = function(req, res) {
     }else if(accountType == 'CD') {
       var response =
         {
-        "speech": "Your last transaction as of " + getDateTime()+" in CD account ending with 478 is +$1,450.000.00 on 12/09  Deposit",
+        "speech": "Your last transaction as of " + getDate()+" in CD account ending with 478 is +$1,450.000.00 on 12/09  Deposit",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -511,7 +511,7 @@ var getBranchClosingTimeForToday = function(branch){
         return hour + ":" + minutes + "AM";
 };
 
-var getDateTime =function () {
+var getDate =function () {
 
 
     var date = new Date();
@@ -533,9 +533,38 @@ var getDateTime =function () {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    var dateTime = year + "-" + month + "-" + day 
+    var currentDate = year + "-" + month + "-" + day 
 
-    return dateTime;
+    return currentDate;
+
+}
+
+var getTime =function () {
+
+
+    var date = new Date();
+
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+
+
+    /*var year = date.getFullYear();
+
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;*/
+
+    var currentTime = hour + "-" + min 
+
+    return currentTime;
 
 }
 
