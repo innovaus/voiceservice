@@ -584,8 +584,8 @@ var handleAutoLoan =function(req, res) {
   var loantermonths = req.body.result.parameters.loanterm;
   var loanamount = req.body.result.parameters.loanamount;
   getJsonFromAutoLoan(zip, loanamount, loantermonths, function(data){
-    console.log(data.AutoLoanRates.RateTier[0].Rate);
     var interest = data.AutoLoanRates.RateTier[0].Rate;
+    console.log(interest);
     var autoLoanReponse ={
                       "speech": "For new auto for loan amount of $"+loanamount+" for "+loantermonths+" months is "+interest+"% APR",
                       "displayText": "",
