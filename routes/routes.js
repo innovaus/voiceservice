@@ -598,9 +598,7 @@ var handleAutoLoan =function(req, res) {
 }
 
 var autoLoanurl = function(zip, loanamount, loantermonths){
-    return "https://publicrestservice.usbank.com/public/RatesRestService_V_5_0/GetAutoLoanRates?application=RIB&output=xml&zipcode="+
-    zip+"&loanamount="+loanamount+"&loantermmonths="+loantermmonths;
-
+    return "https://publicrestservice.usbank.com/public/RatesRestService_V_5_0/GetAutoLoanRates?application=RIB&output=json&zipcode="+zip+"&loanamount="+loanamount+"&loantermmonths="+loantermmonths;
 };
 
 var getJsonFromAutoLoan = function (zip, loanamount, loantermonths, callback){
