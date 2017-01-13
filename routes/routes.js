@@ -198,11 +198,11 @@ var handleAccountBalance = function(req, res) {
   } else {
     var response =
       {
-      "speech": "Your Balance as of <speak> <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + getDateTime() +
-    "</say-as></speak> in "
+      "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + getDateTime() +
+    "</say-as> in "
       + "Checking account ending with 356 is $15,382.57"
       + ", Saving  account ending with 432 is $4,655.00"
-      + ", CD account ending with 478 is $400,655.00",
+      + ", CD account ending with 478 is $400,655.00 </speak>",
       "displayText": "",
       "data": {},
       "contextOut": [],
@@ -533,7 +533,7 @@ var getDateTime =function () {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    var dateTime = month + "-" + year + "-" + day  + "CT"
+    var dateTime = month + "-" + year + "-" + day  + " CT"
 
     return dateTime;
 
