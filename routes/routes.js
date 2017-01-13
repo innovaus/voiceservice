@@ -28,6 +28,11 @@ var appRouter = function(app) {
     else if (intent == 'transaction-service'){
         handleTransactionHistory(req, res);
     }
+    else if (intent == 'auto-loan'){
+        handleAutoLoan(req, res);
+    }else if (intent == 'home-loan'){
+        handleHomeLoan(req, res);
+    }
     // handle default intent == 'Default Welcome Intent'
     else {
       handleWelcomeIntent(req, res);
@@ -335,7 +340,7 @@ var handleTransactionHistory = function(req, res) {
                               "subtitle": "Account No:...xxx4789:",
                               "buttons": [
                                 {
-                                  "text": "+$1,450.000.00 on 12/09  Deposit"
+                                  "text": "+$1,450,000.00 on 12/09  Deposit"
                                 }
                               ],
                               "type": 1
@@ -373,7 +378,7 @@ var handleTransactionHistory = function(req, res) {
       var response =
         {
         "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with <say-as interpret-as=\"digits\">4789<\say-as> is +$1,450.000.00 on <say-as interpret-as=\"date\" format=\"dm\" > 9-12 </say-as>  Deposit</speak>",
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with <say-as interpret-as=\"digits\">4789<\say-as> is +$1,450,000.00 on <say-as interpret-as=\"date\" format=\"dm\" > 9-12 </say-as>  Deposit</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -385,7 +390,7 @@ var handleTransactionHistory = function(req, res) {
 }
 
 // End handleTransactionHistory
-
+// Start Handle Branch Locator
 var handleBranchLocator = function(req, res) {
   //console.log(req.body);
     var zip = req.body.result.parameters.zipcode;
@@ -453,7 +458,7 @@ var handleBranchLocator = function(req, res) {
         return;
      });
 };
-
+//End 
 var url = function(zip){
     return "https://publicrestservice.usbank.com/public/ATMBranchLocatorRESTService_V_8_0/GetListATMorBranch/LocationSearch/" +
                     "StringQuery?application=parasoft&transactionid=cb6b8ea5-3331-408c-9ab3-58e18f2e5f95&output=json&searchtype=E&" +
@@ -570,6 +575,83 @@ var getTime =function () {
     return currentTime;
 
 }
+
+var handleAutoLoan =function(req, res) {
+  var autoLoanReponse ={
+                    "speech": "",
+                    "displayText": "",
+                    "data": {},
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                  };
+  res.send(autoLoanReponse);
+}
+
+var autoLoanurl = function(zip, loanamount, loantermonths){
+    return "https://publicrestservice.usbank.com/public/RatesRestService_V_5_0/GetAutoLoanRates?application=RIB&output=xml&zipcode="+
+    zip+"&loanamount="+loanamount+"&loantermmonths="+loantermmonths;
+    
+};
+
+var getJsonFromAutoLoan = function (zip, loanamount, loantermonths, callback){
+  var t0 = new Date().getTime();
+    https.get(url(zip, loanamount, loantermonths), function(res){
+    var body = '';
+
+    res.on('data', function(data){
+      body += data;
+    });
+
+    res.on('end', function(){
+      var t1 = new Date().getTime();
+      console.log("Call to service took " + (t1 - t0) + " milliseconds.");
+      //var result = body;
+      var result = JSON.parse(body);
+      return callback(result);
+    });
+
+  }).on('error', function(e){
+    console.log('Error: ' + e);
+  });
+};
+
+var handleHomeLoan =function(req, res) {
+  var homeLoanReponse ={
+                    "speech": "",
+                    "displayText": "",
+                    "data": {},
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                  };
+  res.send(homeLoanReponse);
+}
+
+var homeLoanurl = function(){
+    return "https://publicrestservice.usbank.com/public/RatesRestService_V_5_0/GetMortgageRates?application=RIB&output=json;
+    
+};
+
+var getJsonFromHomeLoan = function (callback){
+  var t0 = new Date().getTime();
+    https.get(url(), function(res){
+    var body = '';
+
+    res.on('data', function(data){
+      body += data;
+    });
+
+    res.on('end', function(){
+      var t1 = new Date().getTime();
+      console.log("Call to service took " + (t1 - t0) + " milliseconds.");
+      //var result = body;
+      var result = JSON.parse(body);
+      return callback(result);
+    });
+
+  }).on('error', function(e){
+    console.log('Error: ' + e);
+  });
+};
 
 app.post("/branch", function(req, res) {
     var branchResponse =
