@@ -533,7 +533,7 @@ var getDateTime =function () {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    var dateTime = month + "-" + year + "-" + day  + " CT"
+    var dateTime = month + "-" + year + "-" + day  + "CT"
 
     return dateTime;
 
