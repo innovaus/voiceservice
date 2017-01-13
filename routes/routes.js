@@ -351,7 +351,7 @@ var handleTransactionHistory = function(req, res) {
       var response =
         {
         "speech": "<speak>Your last transaction as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Checking account ending with 356 is -$159.90 on 12/01 Web Author</speak>",
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Checking account ending with 356 is -$159.90 on <say-as interpret-as=\"date\" format=\"dm\" > 2-12 </say-as>  Web Author</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -362,7 +362,7 @@ var handleTransactionHistory = function(req, res) {
       var response =
         {
         "speech": "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with 432 is -$3459.90 on 12/03 Macys</speak>",
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with 432 is -$3459.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -373,7 +373,7 @@ var handleTransactionHistory = function(req, res) {
       var response =
         {
         "speech": "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with 478 is +$1,450.000.00 on 12/09  Deposit</speak>",
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with 478 is +$1,450.000.00 on <say-as interpret-as=\"date\" format=\"dm\" > 9-12 </say-as>  Deposit</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
