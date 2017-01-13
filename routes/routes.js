@@ -624,14 +624,19 @@ var getJsonFromAutoLoan = function (zip, loanamount, loantermmonths, callback){
 };
 
 var handleHomeLoan =function(req, res) {
-  var homeLoanReponse ={
-                    "speech": "",
-                    "displayText": "",
-                    "data": {},
-                    "contextOut": [],
-                    "source": "U.S Bank"
-                  };
-  res.send(homeLoanReponse);
+  console.log(req.body);
+  getJsonFromHomeLoan(function(data){
+    var interest = data.MortgageRatesList.MortgageRates[7].RatesDetailList.Rate;
+    console.log(interest);
+    var homeLoanReponse ={
+                      "speech": "Home loan is "+interest+"% APR",
+                      "displayText": "",
+                      "data": {},
+                      "contextOut": [],
+                      "source": "U.S Bank"
+                    };
+    res.send(homeLoanReponse);
+  });
 }
 
 var homeLoanurl = function(){
@@ -641,7 +646,7 @@ var homeLoanurl = function(){
 
 var getJsonFromHomeLoan = function (callback){
   var t0 = new Date().getTime();
-    https.get(url(), function(res){
+    https.get(homeLoanurl(), function(res){
     var body = '';
 
     res.on('data', function(data){
