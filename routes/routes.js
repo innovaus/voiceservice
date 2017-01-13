@@ -603,7 +603,7 @@ var autoLoanurl = function(zip, loanamount, loantermonths){
 
 var getJsonFromAutoLoan = function (zip, loanamount, loantermonths, callback){
   var t0 = new Date().getTime();
-    https.get(url(zip, loanamount, loantermonths), function(res){
+    https.get(autoLoanurl(zip, loanamount, loantermonths), function(res){
     var body = '';
 
     res.on('data', function(data){
