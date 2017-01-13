@@ -581,8 +581,8 @@ var getTime =function () {
 var handleAutoLoan =function(req, res) {
   console.log(req.body);
   var zip = req.body.result.parameters.zipcode;
-  var loantermonths = req.body.result.parameters.loan-term;
-  var loanamount = req.body.result.parameters.loan-amount;
+  var loantermonths = req.body.result.parameters.loanterm;
+  var loanamount = req.body.result.parameters.loanamount;
   getJsonFromAutoLoan(zip, loanamount, loantermonths, new function(data){
     console.log(data);
     var autoLoanReponse ={
