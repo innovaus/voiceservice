@@ -10,12 +10,11 @@ var appRouter = function(app) {
     // check the intent Name
     var intent = req.body.result.metadata.intentName;
 
-   // handle login
-   if(intent == 'login') {
-     console.log("Log in");
-       // handleLogin(req, res);
+    // handle login
+    if(intent == 'login') {
+      console.log("Log in");
+      // handleLogin(req, res);
     }
-
     // handle branch locator intent
     else if(intent == 'branch-locator-service') {
         handleBranchLocator(req, res);
@@ -28,9 +27,12 @@ var appRouter = function(app) {
     else if (intent == 'transaction-service'){
         handleTransactionHistory(req, res);
     }
-    else if (intent == 'auto-loan'){
+    // handle auto loan
+    else if (intent == 'auto-loan-service'){
         handleAutoLoan(req, res);
-    }else if (intent == 'home-loan'){
+    }
+    // handle home loan
+    else if (intent == 'home-loan-service'){
         handleHomeLoan(req, res);
     }
     // handle default intent == 'Default Welcome Intent'
@@ -458,7 +460,7 @@ var handleBranchLocator = function(req, res) {
         return;
      });
 };
-//End 
+//End
 var url = function(zip){
     return "https://publicrestservice.usbank.com/public/ATMBranchLocatorRESTService_V_8_0/GetListATMorBranch/LocationSearch/" +
                     "StringQuery?application=parasoft&transactionid=cb6b8ea5-3331-408c-9ab3-58e18f2e5f95&output=json&searchtype=E&" +
@@ -541,7 +543,7 @@ var getDate =function () {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    var currentDate = year + "-" + month + "-" + day 
+    var currentDate = year + "-" + month + "-" + day
 
     return currentDate;
 
@@ -570,27 +572,34 @@ var getTime =function () {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;*/
 
-    var currentTime = hour + ":" + min 
+    var currentTime = hour + ":" + min
 
     return currentTime;
 
 }
 
 var handleAutoLoan =function(req, res) {
-  var autoLoanReponse ={
-                    "speech": "",
-                    "displayText": "",
-                    "data": {},
-                    "contextOut": [],
-                    "source": "U.S Bank"
-                  };
-  res.send(autoLoanReponse);
+  console.log(req.body);
+  var zip = req.body.result.parameters.zipcode;
+  var loantermonths = req.body.result.parameters.loan-term;
+  var loanamount = req.body.result.parameters.loan-amount;
+  getJsonFromAutoLoan(zip, loanamount, loantermonths, new function(data){
+    console.log(data);
+    var autoLoanReponse ={
+                      "speech": "its 3.4% only",
+                      "displayText": "",
+                      "data": {},
+                      "contextOut": [],
+                      "source": "U.S Bank"
+                    };
+    res.send(autoLoanReponse);
+  });
 }
 
 var autoLoanurl = function(zip, loanamount, loantermonths){
     return "https://publicrestservice.usbank.com/public/RatesRestService_V_5_0/GetAutoLoanRates?application=RIB&output=xml&zipcode="+
     zip+"&loanamount="+loanamount+"&loantermmonths="+loantermmonths;
-    
+
 };
 
 var getJsonFromAutoLoan = function (zip, loanamount, loantermonths, callback){
@@ -628,7 +637,7 @@ var handleHomeLoan =function(req, res) {
 
 var homeLoanurl = function(){
     return "https://publicrestservice.usbank.com/public/RatesRestService_V_5_0/GetMortgageRates?application=RIB&output=json";
-    
+
 };
 
 var getJsonFromHomeLoan = function (callback){
