@@ -159,7 +159,7 @@ var handleAccountBalance = function(req, res) {
     "messages": [
                     {
                       "title": "Your Balance as of " + getDate() + " " +getTime(),
-                      "subtitle": "Checking xxx356: $15,382.57",
+                      "subtitle": "Checking xxx3562: $15,382.57",
                       "buttons": [
                         {
                           "text": "Transactions",
@@ -170,7 +170,7 @@ var handleAccountBalance = function(req, res) {
                     },
                      {
                       "title": "Your Balance as of " + getDate()  + " " + getTime(),
-                      "subtitle": "Saving  xxx432: $4,655.00",
+                      "subtitle": "Saving  xxx4321: $4,655.00",
                       "buttons": [
                         {
                           "text": "Transactions",
@@ -181,7 +181,7 @@ var handleAccountBalance = function(req, res) {
                     },
                      {
                       "title": "Your Balance as of " + getDate() + " " + getTime(),
-                      "subtitle": "CD xxx478: $400,655.00",
+                      "subtitle": "CD xxx4789: $400,655.00",
                       "buttons": [
                         {
                           "text": "Transactions",
@@ -200,9 +200,9 @@ var handleAccountBalance = function(req, res) {
       {
       "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
     "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
-      + "Checking account ending with 356 is $15,382.57"
-      + ", Saving  account ending with 432 is $4,655.00"
-      + ", CD account ending with 478 is $400,655.00 </speak>",
+      + "Checking account ending with <say-as interpret-as=\"digits\">3562 </say-as> is $15,382.57"
+      + ", Saving  account ending with <say-as interpret-as=\"digits\">4321 </say-as>is $4,655.00"
+      + ", CD account ending with <say-as interpret-as=\"digits\">4789 </say-as> is $400,655.00 </speak>",
       "displayText": "",
       "data": {},
       "contextOut": [],
@@ -229,15 +229,15 @@ var handleTransactionHistory = function(req, res) {
                           "subtitle": "",
                           "buttons": [
                             {
-                              "text": "Checking xx356",
+                              "text": "Checking xx3562",
                               "postback": "Transactions of Checking"
                             },
                             {
-                              "text": "Saving xxx432",
+                              "text": "Saving xxx4321",
                               "postback": "Transactions of Saving"
                             },
                             {
-                              "text": "CD xxx478",
+                              "text": "CD xxx4789",
                               "postback": "Transactions of CD"
                             }
                           ],
@@ -271,7 +271,7 @@ var handleTransactionHistory = function(req, res) {
           "messages": [
                           {
                             "title": "Your Transaction History as of" + getDate() + " " +getTime(),
-                            "subtitle": "Account No:...xxx356:",
+                            "subtitle": "Account No:...xxx3562:",
                             "buttons": [
                               {
                                 "text": "-$159.90 on 12/01 Web Author",
@@ -302,7 +302,7 @@ var handleTransactionHistory = function(req, res) {
             "messages": [
                             {
                               "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
-                              "subtitle": "Account No:...xxx432:",
+                              "subtitle": "Account No:...xxx4321:",
                               "buttons": [
                                 {
                                   "text": "-$3459.90 on 12/03 Macys",
@@ -332,7 +332,7 @@ var handleTransactionHistory = function(req, res) {
             "messages": [
                             {
                               "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
-                              "subtitle": "Account No:...xxx478:",
+                              "subtitle": "Account No:...xxx4789:",
                               "buttons": [
                                 {
                                   "text": "+$1,450.000.00 on 12/09  Deposit"
@@ -351,7 +351,7 @@ var handleTransactionHistory = function(req, res) {
       var response =
         {
         "speech": "<speak>Your last transaction as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Checking account ending with 356 is -$159.90 on <say-as interpret-as=\"date\" format=\"dm\" > 2-12 </say-as>  Web Author</speak>",
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Checking account ending with <say-as interpret-as=\"digits\">3562 </say-as> is -$159.90 on <say-as interpret-as=\"date\" format=\"dm\" > 2-12 </say-as>  Web Author</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -362,7 +362,7 @@ var handleTransactionHistory = function(req, res) {
       var response =
         {
         "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with 432 is -$3459.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with <say-as interpret-as=\"digits\">4321 </say-as> is -$3459.90 on <say-as interpret-as=\"date\" format=\"dm\" > 3-12 </say-as> Macys</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -373,7 +373,7 @@ var handleTransactionHistory = function(req, res) {
       var response =
         {
         "speech":  "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with 478 is +$1,450.000.00 on <say-as interpret-as=\"date\" format=\"dm\" > 9-12 </say-as>  Deposit</speak>",
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with <say-as interpret-as=\"digits\">4789<\say-as> is +$1,450.000.00 on <say-as interpret-as=\"date\" format=\"dm\" > 9-12 </say-as>  Deposit</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
