@@ -94,7 +94,7 @@ var handleWelcomeIntent = function(req, res) {
   } else {
     var response =
       {
-      "speech": "How may I help you? Specify balance check, transaction history, branch locator",
+      "speech": "<speak>How may I help you? Specify balance check, transaction history, branch locator</speak>",
       "displayText": "",
       "data": {},
       "contextOut": [],
@@ -136,7 +136,7 @@ var handleLogin = function(req, res) {
     } else {
       var response =
         {
-        "speech": "If you are an existing client, please login.",
+        "speech": "<speak>If you are an existing client, please login.</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -158,7 +158,7 @@ var handleAccountBalance = function(req, res) {
     "displayText": "",
     "messages": [
                     {
-                      "title": "Your Balance as of " + getDate() + getTime(),
+                      "title": "Your Balance as of " + getDate() + " " +getTime(),
                       "subtitle": "Checking xxx356: $15,382.57",
                       "buttons": [
                         {
@@ -169,7 +169,7 @@ var handleAccountBalance = function(req, res) {
                       "type": 1
                     },
                      {
-                      "title": "Your Balance as of " + getDate() + getTime(),
+                      "title": "Your Balance as of " + getDate()  + " " + getTime(),
                       "subtitle": "Saving  xxx432: $4,655.00",
                       "buttons": [
                         {
@@ -180,7 +180,7 @@ var handleAccountBalance = function(req, res) {
                       "type": 1
                     },
                      {
-                      "title": "Your Balance as of " + getDate() + getTime(),
+                      "title": "Your Balance as of " + getDate() + " " + getTime(),
                       "subtitle": "CD xxx478: $400,655.00",
                       "buttons": [
                         {
@@ -199,7 +199,7 @@ var handleAccountBalance = function(req, res) {
     var response =
       {
       "speech": "<speak> Your Balance as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
-    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">2:30pm</say-as> in "
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in "
       + "Checking account ending with 356 is $15,382.57"
       + ", Saving  account ending with 432 is $4,655.00"
       + ", CD account ending with 478 is $400,655.00 </speak>",
@@ -253,7 +253,7 @@ var handleTransactionHistory = function(req, res) {
       } else {
         var response =
           {
-          "speech": "Specify account type, Say Checking, Saving, CD",
+          "speech": "<speak>Specify account type, Say Checking, Saving, CD</speak>",
           "displayText": "",
           "data": {},
           "contextOut": [],
@@ -270,7 +270,7 @@ var handleTransactionHistory = function(req, res) {
           "displayText": "",
           "messages": [
                           {
-                            "title": "Your Transaction History as of" + getDate() + getTime(),
+                            "title": "Your Transaction History as of" + getDate() + " " +getTime(),
                             "subtitle": "Account No:...xxx356:",
                             "buttons": [
                               {
@@ -301,7 +301,7 @@ var handleTransactionHistory = function(req, res) {
             "displayText": "",
             "messages": [
                             {
-                              "title": "Your Transaction History as of" + getDate() + getTime(),
+                              "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
                               "subtitle": "Account No:...xxx432:",
                               "buttons": [
                                 {
@@ -331,7 +331,7 @@ var handleTransactionHistory = function(req, res) {
             "displayText": "",
             "messages": [
                             {
-                              "title": "Your Transaction History as of" + getDate() + getTime(),
+                              "title": "Your Transaction History as of" + getDate() +  " " +getTime(),
                               "subtitle": "Account No:...xxx478:",
                               "buttons": [
                                 {
@@ -350,7 +350,8 @@ var handleTransactionHistory = function(req, res) {
     if (accountType == 'checkings'){
       var response =
         {
-        "speech": "Your last transaction as of " + getDate()+" in Checking account ending with 356 is -$159.90 on 12/01 Web Author",
+        "speech": "<speak>Your last transaction as of  <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Checking account ending with 356 is -$159.90 on 12/01 Web Author</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -360,7 +361,8 @@ var handleTransactionHistory = function(req, res) {
     }else if(accountType == 'savings'){
       var response =
         {
-        "speech": "Your last transaction as of " + getDate()+" in Saving account ending with 432 is -$3459.90 on 12/03 Macys",
+        "speech": "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in Saving account ending with 432 is -$3459.90 on 12/03 Macys</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -370,7 +372,8 @@ var handleTransactionHistory = function(req, res) {
     }else if(accountType == 'CD') {
       var response =
         {
-        "speech": "Your last transaction as of " + getDate()+" in CD account ending with 478 is +$1,450.000.00 on 12/09  Deposit",
+        "speech": "<speak>Your last transaction as of <say-as interpret-as=\"date\" format=\"yyyymmdd\" detail=\"2\">" + " " + getDate() +
+    "</say-as> <say-as interpret-as=\"time\" format=\"hms12\">"+ getTime() +"</say-as> in CD account ending with 478 is +$1,450.000.00 on 12/09  Deposit</speak>",
         "displayText": "",
         "data": {},
         "contextOut": [],
@@ -562,7 +565,7 @@ var getTime =function () {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;*/
 
-    var currentTime = hour + "-" + min 
+    var currentTime = hour + ":" + min 
 
     return currentTime;
 
