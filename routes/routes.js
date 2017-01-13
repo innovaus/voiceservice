@@ -627,7 +627,7 @@ var handleHomeLoan =function(req, res) {
 }
 
 var homeLoanurl = function(){
-    return "https://publicrestservice.usbank.com/public/RatesRestService_V_5_0/GetMortgageRates?application=RIB&output=json;
+    return "https://publicrestservice.usbank.com/public/RatesRestService_V_5_0/GetMortgageRates?application=RIB&output=json";
     
 };
 
