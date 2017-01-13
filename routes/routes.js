@@ -581,13 +581,13 @@ var getTime =function () {
 var handleAutoLoan =function(req, res) {
   console.log(req.body);
   var zip = req.body.result.parameters.zipcode;
-  var loantermonths = req.body.result.parameters.loanterm;
+  var loantermmonths = req.body.result.parameters.loanterm;
   var loanamount = req.body.result.parameters.loanamount;
-  getJsonFromAutoLoan(zip, loanamount, loantermonths, function(data){
+  getJsonFromAutoLoan(zip, loanamount, loantermmonths, function(data){
     var interest = data.AutoLoanRates.RateTier[0].Rate;
     console.log(interest);
     var autoLoanReponse ={
-                      "speech": "For new auto for loan amount of $"+loanamount+" for "+loantermonths+" months is "+interest+"% APR",
+                      "speech": "For new auto for loan amount of $"+loanamount+" for "+loantermmonths+" months is "+interest+"% APR",
                       "displayText": "",
                       "data": {},
                       "contextOut": [],
@@ -597,13 +597,13 @@ var handleAutoLoan =function(req, res) {
   });
 }
 
-var autoLoanurl = function(zip, loanamount, loantermonths){
+var autoLoanurl = function(zip, loanamount, loantermmonths){
     return "https://publicrestservice.usbank.com/public/RatesRestService_V_5_0/GetAutoLoanRates?application=RIB&output=json&zipcode="+zip+"&loanamount="+loanamount+"&loantermmonths="+loantermmonths;
 };
 
-var getJsonFromAutoLoan = function (zip, loanamount, loantermonths, callback){
+var getJsonFromAutoLoan = function (zip, loanamount, loantermmonths, callback){
   var t0 = new Date().getTime();
-    https.get(autoLoanurl(zip, loanamount, loantermonths), function(res){
+    https.get(autoLoanurl(zip, loanamount, loantermmonths), function(res){
     var body = '';
 
     res.on('data', function(data){
