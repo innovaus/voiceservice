@@ -583,7 +583,7 @@ var handleAutoLoan =function(req, res) {
   var zip = req.body.result.parameters.zipcode;
   var loantermonths = req.body.result.parameters.loanterm;
   var loanamount = req.body.result.parameters.loanamount;
-  getJsonFromAutoLoan(zip, loanamount, loantermonths, new function(data){
+  getJsonFromAutoLoan(zip, loanamount, loantermonths, function(data){
     console.log(data);
     var autoLoanReponse ={
                       "speech": "its 3.4% only",
