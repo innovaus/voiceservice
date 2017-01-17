@@ -587,7 +587,7 @@ var handleAutoLoan =function(req, res) {
     var interest = data.AutoLoanRates.RateTier[0].Rate;
     console.log(interest);
     var autoLoanReponse ={
-                      "speech": "For new auto for loan amount of $"+loanamount+" for "+loantermmonths+" months is "+interest+"% APR",
+                      "speech": "Your Auto Loan APR is " +interest+ "% for loan amount of $"+loanamount+" for "+loantermmonths+ "months",
                       "displayText": "",
                       "data": {},
                       "contextOut": [],
@@ -629,7 +629,7 @@ var handleHomeLoan =function(req, res) {
     var interest = data.MortgageRatesList.MortgageRates[7].RatesDetailList.Rate;
     console.log(interest);
     var homeLoanReponse ={
-                      "speech": "Home loan is "+interest+"% APR",
+                      "speech": "Your Home Loan APR is "+interest+"% APR",
                       "displayText": "",
                       "data": {},
                       "contextOut": [],
