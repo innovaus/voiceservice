@@ -673,7 +673,7 @@ var handleHomeLoan =function(req, res) {
                     "displayText": "",
                     "messages": [
                         {
-                          "title": "Our popular 30 years Home Loan has an interest rate of "+interest+".",
+                          "title": "Our popular 30 years Home Loan has an interest rate of "+interest+"%.",
                           "subtitle": "Addtional loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
                           "buttons": [
                             {
