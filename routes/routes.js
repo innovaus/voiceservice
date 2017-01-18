@@ -678,7 +678,7 @@ var handleHomeLoan =function(req, res) {
                           "buttons": [
                              {
                               "text": "usbank.com",
-                              "url": "www.usbank.com"
+                              "url": "http://www.usbank.com"
                             },
                             {
                               "text": "Connect Me",
