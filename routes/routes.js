@@ -589,7 +589,7 @@ var handleAutoLoan =function(req, res) {
 
 
     if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
-      var homeLoanResponse =
+      var autoLoanResponse =
                     {
                     "speech": "",
                     "displayText": "",
@@ -611,7 +611,7 @@ var handleAutoLoan =function(req, res) {
                     "contextOut": [],
                     "source": "U.S Bank"
                     }
-          res.send(homeLoanResponse);
+          res.send(autoLoanResponse);
           return;
       } else {
         var response =
@@ -666,14 +666,50 @@ var handleHomeLoan =function(req, res) {
   getJsonFromHomeLoan(function(data){
     var interest = data.MortgageRatesList.MortgageRates[7].RatesDetailList.Rate;
     console.log(interest);
-    var homeLoanReponse ={
+    if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+      var homeLoanResponse =
+                    {
+                    "speech": "",
+                    "displayText": "",
+                    "messages": [
+                        {
+                          "title": "Our popular 30 years Home Loan has an interest rate of "+interest+".",
+                          "subtitle": "Addtional loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
+                          "buttons": [
+                            {
+                              "text": "Connect Me",
+                              "postback": "Connect Me"
+                            }
+                          
+                          ],
+                          "type": 1
+                        }
+                      ],
+
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                    }
+          res.send(homeLoanResponse);
+          return;
+      } else {
+        var response =
+          {
+          "speech": "<speak>Our popular 30 years Home Loan has an interest rate of "+interest+". Addtional loan options information can be found at usbank.com. </speak>",
+          "displayText": "",
+          "data": {},
+          "contextOut": [],
+          "source": "US Bank"
+          }
+        res.send(response);
+      }
+  /*  var homeLoanReponse ={
                       "speech": "Your Home Loan APR is "+interest+"% APR",
                       "displayText": "",
                       "data": {},
                       "contextOut": [],
                       "source": "U.S Bank"
                     };
-    res.send(homeLoanReponse);
+    res.send(homeLoanReponse);*/
   });
 }
 
