@@ -595,7 +595,7 @@ var handleAutoLoan =function(req, res) {
                     "displayText": "",
                     "messages": [
                         {
-                          "title": "Our popular 30 years auto loan has an interest rate of "+interest+".",
+                          "title": "Our popular 30 years auto loan has an interest rate of "+interest+"%.",
                           "subtitle": "Addtional loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
                           "buttons": [
                             {
@@ -616,7 +616,7 @@ var handleAutoLoan =function(req, res) {
       } else {
         var response =
           {
-          "speech": "<speak>Our popular 30 years auto loan has an interest rate of "+interest+". Addtional loan options information can be found at usbank.com. </speak>",
+          "speech": "<speak>Our popular 30 years auto loan has an interest rate of "+interest+"%. Addtional loan options information can be found at usbank.com. </speak>",
           "displayText": "",
           "data": {},
           "contextOut": [],
@@ -694,7 +694,7 @@ var handleHomeLoan =function(req, res) {
       } else {
         var response =
           {
-          "speech": "<speak>Our popular 30 years Home Loan has an interest rate of "+interest+". Addtional loan options information can be found at usbank.com. </speak>",
+          "speech": "<speak>Our popular 30 years Home Loan has an interest rate of "+interest+"%. Addtional loan options information can be found at usbank.com. </speak>",
           "displayText": "",
           "data": {},
           "contextOut": [],
@@ -750,8 +750,8 @@ app.post("/branch", function(req, res) {
                     "displayText": "",
                     "messages": [
                         {
-                          "title": "Our popular 30 years home loan has an interest rate of "+interest+".",
-                          "subtitle": "Addtional home loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
+                          "title": "Our popular 30 years Home Loan has an interest rate of "+interest+"%.",
+                          "subtitle": "Addtional Home Loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
                           "buttons": [
                             {
                               "text": "Connect Me",
@@ -771,7 +771,7 @@ app.post("/branch", function(req, res) {
       } else {
         var response =
           {
-          "speech": "<speak>Our popular 30 years loan has an interest rate of "+interest+". Addtional loan options information can be found at usbank.com. </speak>",
+          "speech": "<speak>Our popular 30 years loan has an interest rate of "+interest+"%. Addtional loan options information can be found at usbank.com. </speak>",
           "displayText": "",
           "data": {},
           "contextOut": [],
