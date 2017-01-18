@@ -586,14 +586,52 @@ var handleAutoLoan =function(req, res) {
   getJsonFromAutoLoan(zip, loanamount, loantermmonths, function(data){
     var interest = data.AutoLoanRates.RateTier[0].Rate;
     console.log(interest);
-    var autoLoanReponse ={
+
+
+    if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+      var homeLoanResponse =
+                    {
+                    "speech": "",
+                    "displayText": "",
+                    "messages": [
+                        {
+                          "title": "Our popular 30 years loan has an interest rate of "+interest+".",
+                          "subtitle": "Addtional loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
+                          "buttons": [
+                            {
+                              "text": "Connect Me",
+                              "postback": "Connect Me"
+                            }
+                          
+                          ],
+                          "type": 1
+                        }
+                      ],
+
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                    }
+          res.send(homeLoanResponse);
+          return;
+      } else {
+        var response =
+          {
+          "speech": "<speak>Our popular 30 years loan has an interest rate of "+interest+". Addtional loan options information can be found at usbank.com. </speak>",
+          "displayText": "",
+          "data": {},
+          "contextOut": [],
+          "source": "US Bank"
+          }
+        res.send(response);
+      }
+ /*   var autoLoanReponse ={
                       "speech": "Your Auto Loan APR is " +interest+ "% for loan amount of $"+loanamount+" for "+loantermmonths+ "months",
                       "displayText": "",
                       "data": {},
                       "contextOut": [],
                       "source": "U.S Bank"
                     };
-    res.send(autoLoanReponse);
+    res.send(autoLoanReponse);*/
   });
 }
 
