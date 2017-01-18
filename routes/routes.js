@@ -595,7 +595,7 @@ var handleAutoLoan =function(req, res) {
                     "displayText": "",
                     "messages": [
                         {
-                          "title": "Our popular 30 years loan has an interest rate of "+interest+".",
+                          "title": "Our popular 30 years auto loan has an interest rate of "+interest+".",
                           "subtitle": "Addtional loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
                           "buttons": [
                             {
@@ -616,7 +616,7 @@ var handleAutoLoan =function(req, res) {
       } else {
         var response =
           {
-          "speech": "<speak>Our popular 30 years loan has an interest rate of "+interest+". Addtional loan options information can be found at usbank.com. </speak>",
+          "speech": "<speak>Our popular 30 years auto loan has an interest rate of "+interest+". Addtional loan options information can be found at usbank.com. </speak>",
           "displayText": "",
           "data": {},
           "contextOut": [],
@@ -705,7 +705,45 @@ var getJsonFromHomeLoan = function (callback){
 };
 
 app.post("/branch", function(req, res) {
-    var branchResponse =
+
+
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+      var homeLoanResponse =
+                    {
+                    "speech": "",
+                    "displayText": "",
+                    "messages": [
+                        {
+                          "title": "Our popular 30 years home loan has an interest rate of "+interest+".",
+                          "subtitle": "Addtional home loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
+                          "buttons": [
+                            {
+                              "text": "Connect Me",
+                              "postback": "Connect Me"
+                            }
+                          
+                          ],
+                          "type": 1
+                        }
+                      ],
+
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                    }
+          res.send(homeLoanResponse);
+          return;
+      } else {
+        var response =
+          {
+          "speech": "<speak>Our popular 30 years loan has an interest rate of "+interest+". Addtional loan options information can be found at usbank.com. </speak>",
+          "displayText": "",
+          "data": {},
+          "contextOut": [],
+          "source": "US Bank"
+          }
+        res.send(response);
+      }
+    /*var branchResponse =
       {
       "speech": "Barack Hussein Obama II is the 44th and current President of the United States.",
       "displayText": "Barack Hussein Obama II is the 44th and current President of the United States, and the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University   and Harvard Law School, where ",
@@ -713,7 +751,7 @@ app.post("/branch", function(req, res) {
       "contextOut": [],
       "source": "DuckDuckGo"
       }
-    res.send(branchResponse);
+    res.send(branchResponse);*/
 });
 
 app.post("/branchalexa", function(req, res) {
