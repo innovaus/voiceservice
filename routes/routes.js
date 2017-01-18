@@ -595,11 +595,15 @@ var handleAutoLoan =function(req, res) {
                     "displayText": "",
                     "messages": [
                         {
-                          "title": "Our popular 30 years auto loan has an interest rate of "+interest+"%.",
-                          "subtitle": "Addtional loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
+                          "title": "Your new auto loan has an interest rate of "+interest+"%.",
+                          "subtitle": "For addtional auto loan information choose from the below options.",
                           "buttons": [
+                             {
+                              "text": "usbank.com",
+                              "postback": "https://www.usbank.com/loans-lines/auto-loans/index.aspx"
+                            },
                             {
-                              "text": "Connect Me",
+                              "text": "Connect me to an agent",
                               "postback": "Connect Me"
                             }
                           
@@ -616,7 +620,7 @@ var handleAutoLoan =function(req, res) {
       } else {
         var response =
           {
-          "speech": "<speak>Our popular 30 years auto loan has an interest rate of "+interest+"%. Addtional loan options information can be found at usbank.com. </speak>",
+          "speech": "<speak>Your new auto loan has an interest rate of "+interest+"%. Addtional loan options information can be found at usbank.com. </speak>",
           "displayText": "",
           "data": {},
           "contextOut": [],
@@ -674,14 +678,14 @@ var handleHomeLoan =function(req, res) {
                     "messages": [
                         {
                           "title": "Our popular 30 years Home Loan has an interest rate of "+interest+"%.",
-                          "subtitle": "Addtional loan options information can be found at usbank.com.",
+                          "subtitle": "For addtional home loan information choose from the below options.",
                           "buttons": [
                              {
                               "text": "usbank.com",
-                              "postback": "http://www.usbank.com"
+                              "postback": "https://www.usbank.com/home-loans/mortgage/mortgage-rates.aspx"
                             },
                             {
-                              "text": "I can also connect to you one of our loan specialists. Do you be interested?",
+                              "text": "Connect me to an agent",
                               "postback": "Connect Me"
                             }
                           
