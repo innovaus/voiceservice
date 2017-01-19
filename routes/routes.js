@@ -608,7 +608,7 @@ var handleAutoLoan =function(req, res) {
                               "text": "Connect me to an agent",
                               "postback": "Connect Me"
                             }
-                          
+
                           ],
                           "type": 1
                         }
@@ -669,7 +669,7 @@ var getJsonFromAutoLoan = function (zip, loanamount, loantermmonths, callback){
 
 var handleHomeLoan =function(req, res) {
   const util = require('util');
-  console.log(util.inspect(req.body, false, null));
+  console.log(util.inspect(req, false, null));
   getJsonFromHomeLoan(function(data){
     var interest = data.MortgageRatesList.MortgageRates[7].RatesDetailList.Rate;
     console.log(interest);
@@ -691,7 +691,7 @@ var handleHomeLoan =function(req, res) {
                               "text": "Connect me to an agent",
                               "postback": "Connect Me"
                             }
-                          
+
                           ],
                           "type": 1
                         }
@@ -768,7 +768,7 @@ app.post("/branch", function(req, res) {
                               "text": "Connect Me",
                               "postback": "Connect Me"
                             }
-                          
+
                           ],
                           "type": 1
                         }
