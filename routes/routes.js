@@ -6,7 +6,8 @@ var appRouter = function(app) {
   });
 
   app.post("/usbservice", function(req, res) {
-    console.log(req.body);
+    const util = require('util');
+    console.log(util.inspect(req.body, false, null));
     // check the intent Name
     var intent = req.body.result.metadata.intentName;
 
@@ -579,7 +580,8 @@ var getTime =function () {
 }
 
 var handleAutoLoan =function(req, res) {
-  console.log(req.body);
+  const util = require('util');
+  console.log(util.inspect(req.body, false, null));
   var zip = req.body.result.parameters.zipcode;
   var loantermmonths = req.body.result.parameters.loanterm;
   var loanamount = req.body.result.parameters.loanamount;
@@ -624,7 +626,8 @@ var getJsonFromAutoLoan = function (zip, loanamount, loantermmonths, callback){
 };
 
 var handleHomeLoan =function(req, res) {
-  console.log(req.body);
+  const util = require('util');
+  console.log(util.inspect(req.body, false, null));
   getJsonFromHomeLoan(function(data){
     var interest = data.MortgageRatesList.MortgageRates[7].RatesDetailList.Rate;
     console.log(interest);
