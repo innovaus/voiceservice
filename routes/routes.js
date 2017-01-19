@@ -6,14 +6,14 @@ var appRouter = function(app) {
   });
 
   app.post("/usbservice", function(req, res) {
-    const util = require('util');
-    console.log(util.inspect(req, false, null));
+    //const util = require('util');
+    //console.log(util.inspect(req, false, null));
     // check the intent Name
     var intent = req.body.result.metadata.intentName;
 
     // handle login
     if(intent == 'login') {
-      console.log("Log in");
+      //console.log("Log in");
       // handleLogin(req, res);
     }
     // handle branch locator intent
@@ -114,7 +114,7 @@ var handleWelcomeIntent = function(req, res) {
 
 // Start Handle login
 var handleLogin = function(req, res) {
-  console.log(req.body.originalRequest.source);
+  //console.log(req.body.originalRequest.source);
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
       var branchResponse =
                 {
@@ -157,7 +157,7 @@ var handleLogin = function(req, res) {
 
 // Start handleAccountBalance
 var handleAccountBalance = function(req, res) {
-  console.log(req.body.originalRequest.source);
+  //console.log(req.body.originalRequest.source);
 
   if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
     var response =
@@ -223,7 +223,7 @@ var handleAccountBalance = function(req, res) {
 
 // Start  handleTransactionHistory
 var handleTransactionHistory = function(req, res) {
-  console.log(req.body.result.parameters.accountType);
+  //console.log(req.body.result.parameters.accountType);
   var accountType = req.body.result.parameters.accountType;
   if(accountType == null || accountType == "" ){
     if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
@@ -581,13 +581,13 @@ var getTime =function () {
 
 var handleAutoLoan =function(req, res) {
   const util = require('util');
-  console.log(util.inspect(req.body, false, null));
+  //console.log(util.inspect(req.body, false, null));
   var zip = req.body.result.parameters.zipcode;
   var loantermmonths = req.body.result.parameters.loanterm;
   var loanamount = req.body.result.parameters.loanamount;
   getJsonFromAutoLoan(zip, loanamount, loantermmonths, function(data){
     var interest = data.AutoLoanRates.RateTier[0].Rate;
-    console.log(interest);
+    //console.log(interest);
 
 
     if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
@@ -890,7 +890,7 @@ app.post("/branchalexa", function(req, res) {
 });
 
 app.get("/login", function(req, res) {
-    console.log(req.query);
+    //console.log(req.query);
     //res.send("Hello World");
     //https://oauth-redirect.googleusercontent.com/r/YOUR_PROJECT_ID#access_token=ACCESS_TOKEN&token_type=bearer&state=STATE_STRING
     res.writeHead(301,{Location: req.query.redirect_uri+"#access_token=1234567890&token_type=bearer&state="+req.query.state});
