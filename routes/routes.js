@@ -7,7 +7,7 @@ var appRouter = function(app) {
 
   app.post("/usbservice", function(req, res) {
     const util = require('util');
-    console.log(util.inspect(req.body, false, null));
+    console.log(util.inspect(req, false, null));
     // check the intent Name
     var intent = req.body.result.metadata.intentName;
 
