@@ -588,14 +588,56 @@ var handleAutoLoan =function(req, res) {
   getJsonFromAutoLoan(zip, loanamount, loantermmonths, function(data){
     var interest = data.AutoLoanRates.RateTier[0].Rate;
     console.log(interest);
-    var autoLoanReponse ={
-                      "speech": "For new auto for loan amount of $"+loanamount+" for "+loantermmonths+" months is "+interest+"% APR",
+
+
+    if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+      var autoLoanResponse =
+                    {
+                    "speech": "",
+                    "displayText": "",
+                    "messages": [
+                        {
+                          "title": "Your new auto loan has an interest rate of "+interest+"%.",
+                          "subtitle": "For addtional auto loan information choose from the below options.",
+                          "buttons": [
+                             {
+                              "text": "usbank.com",
+                              "postback": "https://www.usbank.com/loans-lines/auto-loans/index.aspx"
+                            },
+                            {
+                              "text": "Connect me to an agent",
+                              "postback": "Connect Me"
+                            }
+                          
+                          ],
+                          "type": 1
+                        }
+                      ],
+
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                    }
+          res.send(autoLoanResponse);
+          return;
+      } else {
+        var response =
+          {
+          "speech": "<speak>Your new auto loan has an interest rate of "+interest+"%. Addtional loan options information can be found at usbank.com. </speak>",
+          "displayText": "",
+          "data": {},
+          "contextOut": [],
+          "source": "US Bank"
+          }
+        res.send(response);
+      }
+ /*   var autoLoanReponse ={
+                      "speech": "Your Auto Loan APR is " +interest+ "% for loan amount of $"+loanamount+" for "+loantermmonths+ "months",
                       "displayText": "",
                       "data": {},
                       "contextOut": [],
                       "source": "U.S Bank"
                     };
-    res.send(autoLoanReponse);
+    res.send(autoLoanReponse);*/
   });
 }
 
@@ -631,14 +673,54 @@ var handleHomeLoan =function(req, res) {
   getJsonFromHomeLoan(function(data){
     var interest = data.MortgageRatesList.MortgageRates[7].RatesDetailList.Rate;
     console.log(interest);
-    var homeLoanReponse ={
-                      "speech": "Home loan is "+interest+"% APR",
+    if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+      var homeLoanResponse =
+                    {
+                    "speech": "",
+                    "displayText": "",
+                    "messages": [
+                        {
+                          "title": "Our popular 30 years Home Loan has an interest rate of "+interest+"%.",
+                          "subtitle": "For addtional home loan information choose from the below options.",
+                          "buttons": [
+                             {
+                              "text": "usbank.com",
+                              "postback": "https://www.usbank.com/home-loans/mortgage/mortgage-rates.aspx"
+                            },
+                            {
+                              "text": "Connect me to an agent",
+                              "postback": "Connect Me"
+                            }
+                          
+                          ],
+                          "type": 1
+                        }
+                      ],
+
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                    }
+          res.send(homeLoanResponse);
+          return;
+      } else {
+        var response =
+          {
+          "speech": "<speak>Our popular 30 years Home Loan has an interest rate of "+interest+"%. Addtional loan options information can be found at usbank.com. </speak>",
+          "displayText": "",
+          "data": {},
+          "contextOut": [],
+          "source": "US Bank"
+          }
+        res.send(response);
+      }
+  /*  var homeLoanReponse ={
+                      "speech": "Your Home Loan APR is "+interest+"% APR",
                       "displayText": "",
                       "data": {},
                       "contextOut": [],
                       "source": "U.S Bank"
                     };
-    res.send(homeLoanReponse);
+    res.send(homeLoanReponse);*/
   });
 }
 
@@ -670,7 +752,45 @@ var getJsonFromHomeLoan = function (callback){
 };
 
 app.post("/branch", function(req, res) {
-    var branchResponse =
+
+
+  if(req.body.originalRequest != null && req.body.originalRequest.source == 'facebook'){
+      var homeLoanResponse =
+                    {
+                    "speech": "",
+                    "displayText": "",
+                    "messages": [
+                        {
+                          "title": "Our popular 30 years Home Loan has an interest rate of "+interest+"%.",
+                          "subtitle": "Addtional Home Loan options information can be found at usbank.com. I can also connect to youj one of our loan specialists. Do you be interested?",
+                          "buttons": [
+                            {
+                              "text": "Connect Me",
+                              "postback": "Connect Me"
+                            }
+                          
+                          ],
+                          "type": 1
+                        }
+                      ],
+
+                    "contextOut": [],
+                    "source": "U.S Bank"
+                    }
+          res.send(homeLoanResponse);
+          return;
+      } else {
+        var response =
+          {
+          "speech": "<speak>Our popular 30 years loan has an interest rate of "+interest+"%. Addtional loan options information can be found at usbank.com. </speak>",
+          "displayText": "",
+          "data": {},
+          "contextOut": [],
+          "source": "US Bank"
+          }
+        res.send(response);
+      }
+    /*var branchResponse =
       {
       "speech": "Barack Hussein Obama II is the 44th and current President of the United States.",
       "displayText": "Barack Hussein Obama II is the 44th and current President of the United States, and the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University   and Harvard Law School, where ",
@@ -678,7 +798,7 @@ app.post("/branch", function(req, res) {
       "contextOut": [],
       "source": "DuckDuckGo"
       }
-    res.send(branchResponse);
+    res.send(branchResponse);*/
 });
 
 app.post("/branchalexa", function(req, res) {
