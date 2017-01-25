@@ -899,7 +899,7 @@ app.get("/login", function(req, res) {
 
 app.get("/p2pqr", function(req, res) {
     //https://oauth-redirect.googleusercontent.com/r/YOUR_PROJECT_ID#access_token=ACCESS_TOKEN&token_type=bearer&state=STATE_STRING
-    res.writeHead(301,{Location: "myApp://sendmoney?amount=99.19&sender=JohnDoe&token=token_123"});
+    res.writeHead(301,{Location: "myApp://sendmoney?amount="+req.query.amount+"&sender="+req.query.sender+"&token="+req.query.token});
     res.end();
 });
 
