@@ -881,6 +881,10 @@ app.post("/autoloanalexa", function(req, res) {
     var session = req.body.session;
     var sessionAttributes = session.attributes;
 
+    if(req.body.request.intent.slots.numberslot.value){
+
+
+
     if(!sessionAttributes.zipcode){
       var branchResponse =
                 {
@@ -897,7 +901,6 @@ app.post("/autoloanalexa", function(req, res) {
       return;
     } else {
       // collect the value
-      if(req.body.request.intent.slots.numberslot.value){
           var zipcode = {"zipcode":req.body.request.intent.slots.numberslot.value};
           var branchResponse =
                     {
@@ -913,7 +916,9 @@ app.post("/autoloanalexa", function(req, res) {
                     }
           res.send(branchResponse);
           return;
-      }
+
+    }
+
     }
     var branchResponse =
               {
@@ -921,14 +926,9 @@ app.post("/autoloanalexa", function(req, res) {
               "response": {
                   "outputSpeech": {
                   "type": "PlainText",
-                  "text": "Please provide loan amount"
+                  "text": "Please provide Zipcode"
                   },
-                  "card": {
-                       "content": "",
-                      "title": "",
-                   "type": "Simple"
-                  },
-                  "shouldEndSession": true
+                  "shouldEndSession": false
                 },
                 "sessionAttributes": {}
               }
