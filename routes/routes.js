@@ -886,12 +886,7 @@ app.post("/autoloanalexa", function(req, res) {
                     "type": "PlainText",
                     "text": "Please provide zipcode."
                     },
-                    "card": {
-                         "content": "",
-                        "title": "",
-                     "type": "Simple"
-                    },
-                    "shouldEndSession": true
+                    "shouldEndSession": false
                   },
                   "sessionAttributes": req.body.session
                 }
