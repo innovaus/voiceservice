@@ -877,7 +877,11 @@ app.post("/branchalexa", function(req, res) {
 
 app.post("/autoloanalexa", function(req, res) {
     console.log(req.body);
-    if(req.body.request.intent.slots.zip.value == null){
+    // need to check for values in session attributes
+    var session = req.body.session;
+    var sessionAttributes = session.attributes;
+
+    if(!attributes.zipcode){
       var branchResponse =
                 {
                "version": "1.0",
@@ -888,10 +892,31 @@ app.post("/autoloanalexa", function(req, res) {
                     },
                     "shouldEndSession": false
                   },
-                  "sessionAttributes": req.body.session
+                  "sessionAttributes": session
                 }
       res.send(branchResponse);
       return;
+    } else {
+      // collect the value
+      if(req.body.request.intent.slots.numberslot.value){
+          var zipcode = req.body.request.intent.slots.numberslot.value;
+          sessionAttributes.property = {"zipcode":zipcode};
+          session.attributes = sessionAttributes;
+          var branchResponse =
+                    {
+                   "version": "1.0",
+                    "response": {
+                        "outputSpeech": {
+                        "type": "PlainText",
+                        "text": "Specify the loan amount"
+                        },
+                        "shouldEndSession": false
+                      },
+                      "sessionAttributes": session
+                    }
+          res.send(branchResponse);
+          return;
+      }
     }
     var branchResponse =
               {
