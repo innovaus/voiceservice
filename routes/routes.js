@@ -874,6 +874,51 @@ app.post("/branchalexa", function(req, res) {
      });
 });
 
+
+app.post("/autoloanalexa", function(req, res) {
+    console.log(req.body);
+    if(req.body.request.intent.slots.zip.value == null){
+      var branchResponse =
+                {
+               "version": "1.0",
+                "response": {
+                    "outputSpeech": {
+                    "type": "PlainText",
+                    "text": "Please provide zipcode."
+                    },
+                    "card": {
+                         "content": "",
+                        "title": "",
+                     "type": "Simple"
+                    },
+                    "shouldEndSession": true
+                  },
+                  "sessionAttributes": req.body.session
+                }
+      res.send(branchResponse);
+      return;
+    }
+    var branchResponse =
+              {
+             "version": "1.0",
+              "response": {
+                  "outputSpeech": {
+                  "type": "PlainText",
+                  "text": "Please provide loan amount"
+                  },
+                  "card": {
+                       "content": "",
+                      "title": "",
+                   "type": "Simple"
+                  },
+                  "shouldEndSession": true
+                },
+                "sessionAttributes": {}
+              }
+    res.send(branchResponse);
+    return;
+  });
+
   app.get("/account", function(req, res) {
     var accountMock = {
         "username": "nraboy",
