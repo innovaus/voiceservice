@@ -891,17 +891,14 @@ app.post("/autoloanalexa", function(req, res) {
                     "text": "Please provide zipcode."
                     },
                     "shouldEndSession": false
-                  },
-                  "sessionAttributes": session
+                  }
                 }
       res.send(branchResponse);
       return;
     } else {
       // collect the value
       if(req.body.request.intent.slots.numberslot.value){
-          var zipcode = req.body.request.intent.slots.numberslot.value;
-          sessionAttributes.property = {"zipcode":zipcode};
-          session.attributes = sessionAttributes;
+          var zipcode = {"zipcode":req.body.request.intent.slots.numberslot.value};
           var branchResponse =
                     {
                    "version": "1.0",
@@ -912,7 +909,7 @@ app.post("/autoloanalexa", function(req, res) {
                         },
                         "shouldEndSession": false
                       },
-                      "sessionAttributes": session
+                      "sessionAttributes": zipcode
                     }
           res.send(branchResponse);
           return;
