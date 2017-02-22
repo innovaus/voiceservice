@@ -902,7 +902,11 @@ app.post("/autoloanalexa", function(req, res) {
             return;
       } else if(!sessionAttributes.amount){
         // collect the value
-            var amount = {"amount":req.body.request.intent.slots.numberslot.value};
+            var zipcode = sessionAttributes.zipcode;
+            var amount = {
+              "zipcode": zipcode,
+              "amount": req.body.request.intent.slots.numberslot.value
+            };
             var branchResponse =
                       {
                      "version": "1.0",
@@ -914,6 +918,24 @@ app.post("/autoloanalexa", function(req, res) {
                           "shouldEndSession": false
                         },
                         "sessionAttributes": amount
+                      }
+            res.send(branchResponse);
+            return;
+      } else if(!sessionAttributes.term){
+            // collect the value
+            var zipcode = sessionAttributes.zipcode;
+            var amount = sessionAttributes.amount;
+            var term = req.body.request.intent.slots.numberslot.value;
+            var branchResponse =
+                      {
+                     "version": "1.0",
+                      "response": {
+                          "outputSpeech": {
+                          "type": "PlainText",
+                          "text": "Auto loan APR is 3% for "+amount+" of loan amount"
+                          },
+                          "shouldEndSession": true
+                        }
                       }
             res.send(branchResponse);
             return;
