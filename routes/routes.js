@@ -881,7 +881,7 @@ app.post("/autoloanalexa", function(req, res) {
     var session = req.body.session;
     var sessionAttributes = session.attributes;
 
-    if(!attributes.zipcode){
+    if(!sessionAttributes.zipcode){
       var branchResponse =
                 {
                "version": "1.0",
