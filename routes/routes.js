@@ -883,41 +883,24 @@ app.post("/autoloanalexa", function(req, res) {
 
     if(req.body.request.intent.slots.numberslot.value){
 
-
-
-    if(!sessionAttributes.zipcode){
-      var branchResponse =
-                {
-               "version": "1.0",
-                "response": {
-                    "outputSpeech": {
-                    "type": "PlainText",
-                    "text": "Please provide zipcode."
-                    },
-                    "shouldEndSession": false
-                  }
-                }
-      res.send(branchResponse);
-      return;
-    } else {
-      // collect the value
-          var zipcode = {"zipcode":req.body.request.intent.slots.numberslot.value};
-          var branchResponse =
-                    {
-                   "version": "1.0",
-                    "response": {
-                        "outputSpeech": {
-                        "type": "PlainText",
-                        "text": "Specify the loan amount"
+      if(!sessionAttributes.zipcode){
+        // collect the value
+            var zipcode = {"zipcode":req.body.request.intent.slots.numberslot.value};
+            var branchResponse =
+                      {
+                     "version": "1.0",
+                      "response": {
+                          "outputSpeech": {
+                          "type": "PlainText",
+                          "text": "Specify the loan amount"
+                          },
+                          "shouldEndSession": false
                         },
-                        "shouldEndSession": false
-                      },
-                      "sessionAttributes": zipcode
-                    }
-          res.send(branchResponse);
-          return;
-
-    }
+                        "sessionAttributes": zipcode
+                      }
+            res.send(branchResponse);
+            return;
+      }
 
     }
     var branchResponse =
