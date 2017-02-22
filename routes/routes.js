@@ -900,6 +900,23 @@ app.post("/autoloanalexa", function(req, res) {
                       }
             res.send(branchResponse);
             return;
+      } else if(!sessionAttributes.amount){
+        // collect the value
+            var amount = {"amount":req.body.request.intent.slots.numberslot.value};
+            var branchResponse =
+                      {
+                     "version": "1.0",
+                      "response": {
+                          "outputSpeech": {
+                          "type": "PlainText",
+                          "text": "Specify the loan term in months"
+                          },
+                          "shouldEndSession": false
+                        },
+                        "sessionAttributes": amount
+                      }
+            res.send(branchResponse);
+            return;
       }
 
     }
